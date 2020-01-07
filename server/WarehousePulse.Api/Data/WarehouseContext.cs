@@ -1,5 +1,6 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using WarehousePulse.Api.Models;
 
 namespace WarehousePulse.Api.Data
 {
@@ -9,10 +10,16 @@ namespace WarehousePulse.Api.Data
         {
         }
 
+        public DbSet<InventoryItem> InventoryItems { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // singular table names, I don't want "InventoryItems" style tables
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<InventoryItem>()
+                .Property(i => i.UnitCost)
+                .HasPrecision(18, 2);
 
             base.OnModelCreating(modelBuilder);
         }
