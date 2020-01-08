@@ -80,8 +80,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001081448123_InitialCreate.cs" />
+    <Compile Include="Migrations\202001081448123_InitialCreate.Designer.cs">
+      <DependentUpon>202001081448123_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001081448123_InitialCreate.resx">
+      <DependentUpon>202001081448123_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
