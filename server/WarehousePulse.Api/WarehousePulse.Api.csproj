@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\InventoryItemsController.cs" />
     <Compile Include="Controllers\PingController.cs" />
     <Compile Include="Data\WarehouseContext.cs" />
     <Compile Include="Global.asax.cs">
