@@ -29,6 +29,10 @@ namespace WarehousePulse.Api.Models
         [Column(TypeName = "decimal")]
         public decimal UnitCost { get; set; }
 
+        public int? LocationId { get; set; }
+
+        public virtual Location Location { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }

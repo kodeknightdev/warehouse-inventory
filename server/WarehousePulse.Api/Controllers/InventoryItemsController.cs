@@ -16,7 +16,9 @@ namespace WarehousePulse.Api.Controllers
         [HttpGet, Route("")]
         public async Task<IHttpActionResult> GetAll()
         {
-            var items = await db.InventoryItems.OrderBy(i => i.Sku).ToListAsync();
+            var items = await db.InventoryItems
+                .Include(i => i.Location)
+                .OrderBy(i => i.Sku).ToListAsync();
             return Ok(items);
         }
 
@@ -57,6 +59,7 @@ namespace WarehousePulse.Api.Controllers
             existing.UnitOfMeasure = item.UnitOfMeasure;
             existing.UnitCost = item.UnitCost;
             existing.QuantityOnHand = item.QuantityOnHand;
+            existing.LocationId = item.LocationId;
             existing.UpdatedAt = DateTime.UtcNow;
 
             await db.SaveChangesAsync();
