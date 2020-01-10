@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace WarehousePulse.Api
@@ -15,6 +16,8 @@ namespace WarehousePulse.Api
 
             var json = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            // item -> location -> items -> ... blows up the serializer
+            json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             config.MapHttpAttributeRoutes();
 

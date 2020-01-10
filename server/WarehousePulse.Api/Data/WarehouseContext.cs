@@ -8,6 +8,9 @@ namespace WarehousePulse.Api.Data
     {
         public WarehouseContext() : base("name=WarehouseContext")
         {
+            // no lazy loading, use Include() explicitly
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
         }
 
         public DbSet<InventoryItem> InventoryItems { get; set; }
