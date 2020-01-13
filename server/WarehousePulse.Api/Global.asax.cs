@@ -8,6 +8,7 @@ namespace WarehousePulse.Api
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            AutofacConfig.Register(GlobalConfiguration.Configuration);
         }
     }
 }

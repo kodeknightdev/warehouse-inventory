@@ -11,7 +11,12 @@ namespace WarehousePulse.Api.Controllers
     [RoutePrefix("api/items")]
     public class InventoryItemsController : ApiController
     {
-        private readonly WarehouseContext db = new WarehouseContext();
+        private readonly WarehouseContext db;
+
+        public InventoryItemsController(WarehouseContext db)
+        {
+            this.db = db;
+        }
 
         [HttpGet, Route("")]
         public async Task<IHttpActionResult> GetAll()
@@ -76,13 +81,6 @@ namespace WarehousePulse.Api.Controllers
             db.InventoryItems.Remove(item);
             await db.SaveChangesAsync();
             return Ok();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-                db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

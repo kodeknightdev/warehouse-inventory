@@ -10,7 +10,12 @@ namespace WarehousePulse.Api.Controllers
     [RoutePrefix("api/locations")]
     public class LocationsController : ApiController
     {
-        private readonly WarehouseContext db = new WarehouseContext();
+        private readonly WarehouseContext db;
+
+        public LocationsController(WarehouseContext db)
+        {
+            this.db = db;
+        }
 
         [HttpGet, Route("")]
         public async Task<IHttpActionResult> GetAll()
@@ -31,13 +36,6 @@ namespace WarehousePulse.Api.Controllers
             db.Locations.Add(location);
             await db.SaveChangesAsync();
             return Ok(location);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-                db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }
