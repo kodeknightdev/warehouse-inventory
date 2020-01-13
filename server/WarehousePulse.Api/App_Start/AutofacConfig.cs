@@ -16,6 +16,7 @@ namespace WarehousePulse.Api
 
             // one context per request, disposed by autofac at the end of the request
             builder.RegisterType<WarehouseContext>().AsSelf().InstancePerRequest();
+            builder.RegisterType<InventoryRepository>().As<IInventoryRepository>().InstancePerRequest();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

@@ -1,6 +1,4 @@
 using System;
-using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WarehousePulse.Api.Data;
@@ -11,26 +9,24 @@ namespace WarehousePulse.Api.Controllers
     [RoutePrefix("api/items")]
     public class InventoryItemsController : ApiController
     {
-        private readonly WarehouseContext db;
+        private readonly IInventoryRepository repo;
 
-        public InventoryItemsController(WarehouseContext db)
+        public InventoryItemsController(IInventoryRepository repo)
         {
-            this.db = db;
+            this.repo = repo;
         }
 
         [HttpGet, Route("")]
         public async Task<IHttpActionResult> GetAll()
         {
-            var items = await db.InventoryItems
-                .Include(i => i.Location)
-                .OrderBy(i => i.Sku).ToListAsync();
+            var items = await repo.GetAllAsync();
             return Ok(items);
         }
 
         [HttpGet, Route("{id:int}", Name = "GetItem")]
         public async Task<IHttpActionResult> Get(int id)
         {
-            var item = await db.InventoryItems.FindAsync(id);
+            var item = await repo.GetAsync(id);
             if (item == null)
                 return NotFound();
 
@@ -44,8 +40,8 @@ namespace WarehousePulse.Api.Controllers
                 return BadRequest(ModelState);
 
             item.CreatedAt = item.UpdatedAt = DateTime.UtcNow;
-            db.InventoryItems.Add(item);
-            await db.SaveChangesAsync();
+            repo.Add(item);
+            await repo.SaveAsync();
 
             return CreatedAtRoute("GetItem", new { id = item.Id }, item);
         }
@@ -53,7 +49,7 @@ namespace WarehousePulse.Api.Controllers
         [HttpPut, Route("{id:int}")]
         public async Task<IHttpActionResult> Update(int id, InventoryItem item)
         {
-            var existing = await db.InventoryItems.FindAsync(id);
+            var existing = await repo.GetAsync(id);
             if (existing == null)
                 return NotFound();
 
@@ -67,19 +63,19 @@ namespace WarehousePulse.Api.Controllers
             existing.LocationId = item.LocationId;
             existing.UpdatedAt = DateTime.UtcNow;
 
-            await db.SaveChangesAsync();
+            await repo.SaveAsync();
             return Ok(existing);
         }
 
         [HttpDelete, Route("{id:int}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            var item = await db.InventoryItems.FindAsync(id);
+            var item = await repo.GetAsync(id);
             if (item == null)
                 return NotFound();
 
-            db.InventoryItems.Remove(item);
-            await db.SaveChangesAsync();
+            repo.Remove(item);
+            await repo.SaveAsync();
             return Ok();
         }
     }

@@ -85,6 +85,8 @@
     <Compile Include="Controllers\InventoryItemsController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\PingController.cs" />
+    <Compile Include="Data\IInventoryRepository.cs" />
+    <Compile Include="Data\InventoryRepository.cs" />
     <Compile Include="Data\WarehouseContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
