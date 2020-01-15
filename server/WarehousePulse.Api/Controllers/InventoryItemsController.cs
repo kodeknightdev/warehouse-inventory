@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WarehousePulse.Api.Data;
@@ -41,9 +42,13 @@ namespace WarehousePulse.Api.Controllers
             if (request == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var sku = request.Sku.Trim().ToUpperInvariant();
+            if (await repo.SkuExistsAsync(sku))
+                return Content(HttpStatusCode.Conflict, new { message = "SKU " + sku + " already exists" });
+
             var item = new InventoryItem
             {
-                Sku = request.Sku.Trim().ToUpperInvariant(),
+                Sku = sku,
                 Name = request.Name,
                 Description = request.Description,
                 Category = request.Category,
@@ -70,7 +75,11 @@ namespace WarehousePulse.Api.Controllers
             if (existing == null)
                 return NotFound();
 
-            existing.Sku = item.Sku.Trim().ToUpperInvariant();
+            var sku = item.Sku.Trim().ToUpperInvariant();
+            if (await repo.SkuExistsAsync(sku, id))
+                return Content(HttpStatusCode.Conflict, new { message = "SKU " + sku + " already exists" });
+
+            existing.Sku = sku;
             existing.Name = item.Name;
             existing.Description = item.Description;
             existing.Category = item.Category;

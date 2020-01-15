@@ -8,6 +8,7 @@ namespace WarehousePulse.Api.Data
     {
         Task<List<InventoryItem>> GetAllAsync();
         Task<InventoryItem> GetAsync(int id);
+        Task<bool> SkuExistsAsync(string sku, int? exceptId = null);
         void Add(InventoryItem item);
         void Remove(InventoryItem item);
         Task SaveAsync();

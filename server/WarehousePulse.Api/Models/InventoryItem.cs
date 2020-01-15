@@ -9,6 +9,7 @@ namespace WarehousePulse.Api.Models
         public int Id { get; set; }
 
         [Required, StringLength(32)]
+        [Index("IX_InventoryItem_Sku", IsUnique = true)]
         public string Sku { get; set; }
 
         [Required, StringLength(200)]

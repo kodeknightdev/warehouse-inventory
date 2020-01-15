@@ -99,6 +99,10 @@
     <Compile Include="Migrations\202001091512047_AddLocations.Designer.cs">
       <DependentUpon>202001091512047_AddLocations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001151538210_AddSkuUniqueIndex.cs" />
+    <Compile Include="Migrations\202001151538210_AddSkuUniqueIndex.Designer.cs">
+      <DependentUpon>202001151538210_AddSkuUniqueIndex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dto\InventoryItemDto.cs" />
     <Compile Include="Models\Dto\SaveInventoryItemRequest.cs" />
@@ -112,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001091512047_AddLocations.resx">
       <DependentUpon>202001091512047_AddLocations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001151538210_AddSkuUniqueIndex.resx">
+      <DependentUpon>202001151538210_AddSkuUniqueIndex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

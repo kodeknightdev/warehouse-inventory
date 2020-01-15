@@ -30,6 +30,11 @@ namespace WarehousePulse.Api.Data
                 .FirstOrDefaultAsync(i => i.Id == id);
         }
 
+        public Task<bool> SkuExistsAsync(string sku, int? exceptId = null)
+        {
+            return db.InventoryItems.AnyAsync(i => i.Sku == sku && (exceptId == null || i.Id != exceptId));
+        }
+
         public void Add(InventoryItem item)
         {
             db.InventoryItems.Add(item);
