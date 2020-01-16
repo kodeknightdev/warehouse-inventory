@@ -104,6 +104,7 @@
       <DependentUpon>202001151538210_AddSkuUniqueIndex.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Dto\AdjustStockRequest.cs" />
     <Compile Include="Models\Dto\InventoryItemDto.cs" />
     <Compile Include="Models\Dto\SaveInventoryItemRequest.cs" />
     <Compile Include="Models\InventoryItem.cs" />

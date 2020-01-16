@@ -92,6 +92,29 @@ namespace WarehousePulse.Api.Controllers
             return Ok(InventoryItemDto.From(existing));
         }
 
+        [HttpPost, Route("{id:int}/adjust")]
+        public async Task<IHttpActionResult> Adjust(int id, AdjustStockRequest request)
+        {
+            if (request == null || !ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (request.Delta == 0)
+                return BadRequest("Delta can't be zero");
+
+            var item = await repo.GetAsync(id);
+            if (item == null)
+                return NotFound();
+
+            var newQty = item.QuantityOnHand + request.Delta;
+            if (newQty < 0)
+                return BadRequest("Not enough stock, only " + item.QuantityOnHand + " on hand");
+
+            item.QuantityOnHand = newQty;
+            item.UpdatedAt = DateTime.UtcNow;
+            await repo.SaveAsync();
+
+            return Ok(InventoryItemDto.From(item));
+        }
+
         [HttpDelete, Route("{id:int}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
