@@ -103,12 +103,17 @@
     <Compile Include="Migrations\202001151538210_AddSkuUniqueIndex.Designer.cs">
       <DependentUpon>202001151538210_AddSkuUniqueIndex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001171612385_AddStockMovements.cs" />
+    <Compile Include="Migrations\202001171612385_AddStockMovements.Designer.cs">
+      <DependentUpon>202001171612385_AddStockMovements.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dto\AdjustStockRequest.cs" />
     <Compile Include="Models\Dto\InventoryItemDto.cs" />
     <Compile Include="Models\Dto\SaveInventoryItemRequest.cs" />
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\StockMovement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001151538210_AddSkuUniqueIndex.resx">
       <DependentUpon>202001151538210_AddSkuUniqueIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001171612385_AddStockMovements.resx">
+      <DependentUpon>202001171612385_AddStockMovements.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

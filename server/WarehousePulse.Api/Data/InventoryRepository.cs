@@ -40,6 +40,20 @@ namespace WarehousePulse.Api.Data
             db.InventoryItems.Add(item);
         }
 
+        public Task<List<StockMovement>> GetMovementsAsync(int itemId, int take)
+        {
+            return db.StockMovements
+                .Where(m => m.InventoryItemId == itemId)
+                .OrderByDescending(m => m.CreatedAt)
+                .Take(take)
+                .ToListAsync();
+        }
+
+        public void AddMovement(StockMovement movement)
+        {
+            db.StockMovements.Add(movement);
+        }
+
         public void Remove(InventoryItem item)
         {
             db.InventoryItems.Remove(item);

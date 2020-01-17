@@ -110,9 +110,31 @@ namespace WarehousePulse.Api.Controllers
 
             item.QuantityOnHand = newQty;
             item.UpdatedAt = DateTime.UtcNow;
+            repo.AddMovement(new StockMovement
+            {
+                InventoryItemId = item.Id,
+                Delta = request.Delta,
+                QuantityAfter = newQty,
+                Reason = request.Reason,
+                CreatedAt = item.UpdatedAt
+            });
             await repo.SaveAsync();
 
             return Ok(InventoryItemDto.From(item));
+        }
+
+        [HttpGet, Route("{id:int}/movements")]
+        public async Task<IHttpActionResult> Movements(int id, int take = 50)
+        {
+            var movements = await repo.GetMovementsAsync(id, Math.Min(take, 200));
+            return Ok(movements.Select(m => new
+            {
+                m.Id,
+                m.Delta,
+                m.QuantityAfter,
+                m.Reason,
+                m.CreatedAt
+            }));
         }
 
         [HttpDelete, Route("{id:int}")]
