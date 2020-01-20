@@ -1,6 +1,8 @@
+using System.Configuration;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -18,6 +20,10 @@ namespace WarehousePulse.Api
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             // item -> location -> items -> ... blows up the serializer
             json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            var origins = ConfigurationManager.AppSettings["CorsOrigins"];
+            if (!string.IsNullOrWhiteSpace(origins))
+                config.EnableCors(new EnableCorsAttribute(origins, "*", "*"));
 
             config.MapHttpAttributeRoutes();
 
