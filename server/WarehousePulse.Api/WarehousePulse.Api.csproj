@@ -119,6 +119,9 @@
     <Compile Include="Models\Dto\SaveInventoryItemRequest.cs" />
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\Shipment.cs" />
+    <Compile Include="Models\ShipmentLine.cs" />
+    <Compile Include="Models\ShipmentStatus.cs" />
     <Compile Include="Models\StockMovement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

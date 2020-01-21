@@ -16,6 +16,8 @@ namespace WarehousePulse.Api.Data
         public DbSet<InventoryItem> InventoryItems { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<StockMovement> StockMovements { get; set; }
+        public DbSet<Shipment> Shipments { get; set; }
+        public DbSet<ShipmentLine> ShipmentLines { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -25,6 +27,11 @@ namespace WarehousePulse.Api.Data
             modelBuilder.Entity<InventoryItem>()
                 .Property(i => i.UnitCost)
                 .HasPrecision(18, 2);
+
+            modelBuilder.Entity<ShipmentLine>()
+                .HasRequired(l => l.InventoryItem)
+                .WithMany()
+                .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
         }
