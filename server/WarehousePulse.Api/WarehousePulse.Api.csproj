@@ -91,6 +91,7 @@
     <Compile Include="Controllers\InventoryItemsController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\PingController.cs" />
+    <Compile Include="Controllers\ShipmentsController.cs" />
     <Compile Include="Data\IInventoryRepository.cs" />
     <Compile Include="Data\InventoryRepository.cs" />
     <Compile Include="Data\WarehouseContext.cs" />
@@ -119,8 +120,10 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dto\AdjustStockRequest.cs" />
+    <Compile Include="Models\Dto\CreateShipmentRequest.cs" />
     <Compile Include="Models\Dto\InventoryItemDto.cs" />
     <Compile Include="Models\Dto\SaveInventoryItemRequest.cs" />
+    <Compile Include="Models\Dto\ShipmentDto.cs" />
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Shipment.cs" />
