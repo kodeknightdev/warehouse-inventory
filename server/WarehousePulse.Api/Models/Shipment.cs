@@ -34,5 +34,7 @@ namespace WarehousePulse.Api.Models
         public DateTime CreatedAt { get; set; }
 
         public virtual ICollection<ShipmentLine> Lines { get; set; } = new List<ShipmentLine>();
+
+        public virtual ICollection<TrackingEvent> Events { get; set; } = new List<TrackingEvent>();
     }
 }

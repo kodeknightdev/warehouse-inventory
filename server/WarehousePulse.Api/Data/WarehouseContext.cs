@@ -18,6 +18,7 @@ namespace WarehousePulse.Api.Data
         public DbSet<StockMovement> StockMovements { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<ShipmentLine> ShipmentLines { get; set; }
+        public DbSet<TrackingEvent> TrackingEvents { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

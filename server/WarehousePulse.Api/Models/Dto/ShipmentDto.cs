@@ -19,6 +19,7 @@ namespace WarehousePulse.Api.Models.Dto
         public DateTime CreatedAt { get; set; }
         public int TotalUnits { get; set; }
         public List<ShipmentLineDto> Lines { get; set; }
+        public List<TrackingEventDto> Events { get; set; }
 
         public static ShipmentDto From(Shipment s, bool includeLines = true)
         {
@@ -48,6 +49,16 @@ namespace WarehousePulse.Api.Models.Dto
                     Name = l.InventoryItem != null ? l.InventoryItem.Name : null,
                     Quantity = l.Quantity
                 }).ToList();
+
+                dto.Events = s.Events
+                    .OrderByDescending(e => e.OccurredAt)
+                    .Select(e => new TrackingEventDto
+                    {
+                        Status = e.Status.ToString(),
+                        Location = e.Location,
+                        Note = e.Note,
+                        OccurredAt = e.OccurredAt
+                    }).ToList();
             }
 
             return dto;
@@ -61,5 +72,13 @@ namespace WarehousePulse.Api.Models.Dto
         public string Sku { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
+    }
+
+    public class TrackingEventDto
+    {
+        public string Status { get; set; }
+        public string Location { get; set; }
+        public string Note { get; set; }
+        public DateTime OccurredAt { get; set; }
     }
 }

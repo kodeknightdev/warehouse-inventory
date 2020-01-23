@@ -118,18 +118,24 @@
     <Compile Include="Migrations\202001221526419_AddShipments.Designer.cs">
       <DependentUpon>202001221526419_AddShipments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001231647052_AddTrackingEvents.cs" />
+    <Compile Include="Migrations\202001231647052_AddTrackingEvents.Designer.cs">
+      <DependentUpon>202001231647052_AddTrackingEvents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dto\AdjustStockRequest.cs" />
     <Compile Include="Models\Dto\CreateShipmentRequest.cs" />
     <Compile Include="Models\Dto\InventoryItemDto.cs" />
     <Compile Include="Models\Dto\SaveInventoryItemRequest.cs" />
     <Compile Include="Models\Dto\ShipmentDto.cs" />
+    <Compile Include="Models\Dto\UpdateShipmentStatusRequest.cs" />
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Shipment.cs" />
     <Compile Include="Models\ShipmentLine.cs" />
     <Compile Include="Models\ShipmentStatus.cs" />
     <Compile Include="Models\StockMovement.cs" />
+    <Compile Include="Models\TrackingEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001221526419_AddShipments.resx">
       <DependentUpon>202001221526419_AddShipments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001231647052_AddTrackingEvents.resx">
+      <DependentUpon>202001231647052_AddTrackingEvents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

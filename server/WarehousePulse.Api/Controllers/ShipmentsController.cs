@@ -41,6 +41,7 @@ namespace WarehousePulse.Api.Controllers
         {
             var shipment = await db.Shipments
                 .Include(s => s.Lines.Select(l => l.InventoryItem))
+                .Include(s => s.Events)
                 .FirstOrDefaultAsync(s => s.Id == id);
 
             if (shipment == null)
@@ -72,6 +73,13 @@ namespace WarehousePulse.Api.Controllers
                 CreatedAt = DateTime.UtcNow
             };
 
+            shipment.Events.Add(new TrackingEvent
+            {
+                Status = ShipmentStatus.Pending,
+                Note = "Shipment created",
+                OccurredAt = DateTime.Now
+            });
+
             foreach (var line in request.Lines)
                 shipment.Lines.Add(new ShipmentLine { InventoryItemId = line.InventoryItemId, Quantity = line.Quantity });
 
@@ -79,6 +87,41 @@ namespace WarehousePulse.Api.Controllers
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("GetShipment", new { id = shipment.Id }, ShipmentDto.From(shipment));
+        }
+
+        [HttpPost, Route("{id:int}/status")]
+        public async Task<IHttpActionResult> UpdateStatus(int id, UpdateShipmentStatusRequest request)
+        {
+            if (request == null || !ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var shipment = await db.Shipments
+                .Include(s => s.Lines.Select(l => l.InventoryItem))
+                .Include(s => s.Events)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (shipment == null)
+                return NotFound();
+
+            if (shipment.Status == ShipmentStatus.Cancelled)
+                return BadRequest("Shipment is cancelled");
+
+            shipment.Status = request.Status;
+            if (request.Status == ShipmentStatus.InTransit && shipment.ShippedAt == null)
+                shipment.ShippedAt = DateTime.Now;
+            if (request.Status == ShipmentStatus.Delivered)
+                shipment.DeliveredAt = DateTime.Now;
+
+            shipment.Events.Add(new TrackingEvent
+            {
+                Status = request.Status,
+                Location = request.Location,
+                Note = request.Note,
+                OccurredAt = DateTime.Now
+            });
+
+            await db.SaveChangesAsync();
+            return Ok(ShipmentDto.From(shipment));
         }
     }
 }
