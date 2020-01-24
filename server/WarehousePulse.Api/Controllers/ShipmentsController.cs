@@ -106,6 +106,35 @@ namespace WarehousePulse.Api.Controllers
             if (shipment.Status == ShipmentStatus.Cancelled)
                 return BadRequest("Shipment is cancelled");
 
+            // outbound stock leaves when the truck leaves, inbound stock counts once it's delivered
+            var outboundDispatch = shipment.Direction == ShipmentDirection.Outbound
+                && request.Status == ShipmentStatus.InTransit && shipment.ShippedAt == null;
+            var inboundReceipt = shipment.Direction == ShipmentDirection.Inbound
+                && request.Status == ShipmentStatus.Delivered && shipment.DeliveredAt == null;
+
+            if (outboundDispatch || inboundReceipt)
+            {
+                var sign = outboundDispatch ? -1 : 1;
+                foreach (var line in shipment.Lines)
+                {
+                    var item = line.InventoryItem;
+                    var newQty = item.QuantityOnHand + sign * line.Quantity;
+                    if (newQty < 0)
+                        return BadRequest("Not enough stock for " + item.Sku);
+
+                    item.QuantityOnHand = newQty;
+                    item.UpdatedAt = DateTime.UtcNow;
+                    db.StockMovements.Add(new StockMovement
+                    {
+                        InventoryItemId = item.Id,
+                        Delta = sign * line.Quantity,
+                        QuantityAfter = newQty,
+                        Reason = "Shipment " + shipment.Reference,
+                        CreatedAt = DateTime.UtcNow
+                    });
+                }
+            }
+
             shipment.Status = request.Status;
             if (request.Status == ShipmentStatus.InTransit && shipment.ShippedAt == null)
                 shipment.ShippedAt = DateTime.Now;
