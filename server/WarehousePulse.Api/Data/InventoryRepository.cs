@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -21,6 +22,29 @@ namespace WarehousePulse.Api.Data
                 .Include(i => i.Location)
                 .OrderBy(i => i.Sku)
                 .ToListAsync();
+        }
+
+        public async Task<Tuple<List<InventoryItem>, int>> SearchAsync(string search, string category, int page, int pageSize)
+        {
+            var query = db.InventoryItems.Include(i => i.Location);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim();
+                query = query.Where(i => i.Sku.Contains(term) || i.Name.Contains(term));
+            }
+
+            if (!string.IsNullOrWhiteSpace(category))
+                query = query.Where(i => i.Category == category);
+
+            var total = await query.CountAsync();
+            var items = await query
+                .OrderBy(i => i.Sku)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return Tuple.Create(items, total);
         }
 
         public Task<InventoryItem> GetAsync(int id)

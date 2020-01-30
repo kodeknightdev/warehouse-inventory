@@ -20,10 +20,26 @@ namespace WarehousePulse.Api.Controllers
         }
 
         [HttpGet, Route("")]
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAll(string search = null, string category = null, int page = 1, int pageSize = 25)
+        {
+            if (page < 1) page = 1;
+            if (pageSize < 1 || pageSize > 100) pageSize = 25;
+
+            var result = await repo.SearchAsync(search, category, page, pageSize);
+            return Ok(new PagedResult<InventoryItemDto>
+            {
+                Items = result.Item1.Select(InventoryItemDto.From),
+                Total = result.Item2,
+                Page = page,
+                PageSize = pageSize
+            });
+        }
+
+        [HttpGet, Route("categories")]
+        public async Task<IHttpActionResult> Categories()
         {
             var items = await repo.GetAllAsync();
-            return Ok(items.Select(InventoryItemDto.From));
+            return Ok(items.Select(i => i.Category).Where(c => c != null).Distinct().OrderBy(c => c));
         }
 
         [HttpGet, Route("{id:int}", Name = "GetItem")]

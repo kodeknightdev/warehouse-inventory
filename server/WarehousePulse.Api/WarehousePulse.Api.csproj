@@ -126,6 +126,7 @@
     <Compile Include="Models\Dto\AdjustStockRequest.cs" />
     <Compile Include="Models\Dto\CreateShipmentRequest.cs" />
     <Compile Include="Models\Dto\InventoryItemDto.cs" />
+    <Compile Include="Models\Dto\PagedResult.cs" />
     <Compile Include="Models\Dto\SaveInventoryItemRequest.cs" />
     <Compile Include="Models\Dto\ShipmentDto.cs" />
     <Compile Include="Models\Dto\UpdateShipmentStatusRequest.cs" />
