@@ -69,6 +69,7 @@ namespace WarehousePulse.Api.Controllers
                 Description = request.Description,
                 Category = request.Category,
                 QuantityOnHand = request.QuantityOnHand,
+                ReorderLevel = request.ReorderLevel,
                 UnitOfMeasure = request.UnitOfMeasure,
                 UnitCost = request.UnitCost,
                 LocationId = request.LocationId,
@@ -101,6 +102,7 @@ namespace WarehousePulse.Api.Controllers
             existing.Category = item.Category;
             existing.UnitOfMeasure = item.UnitOfMeasure;
             existing.UnitCost = item.UnitCost;
+            existing.ReorderLevel = item.ReorderLevel;
             existing.LocationId = item.LocationId;
             existing.UpdatedAt = DateTime.UtcNow;
 

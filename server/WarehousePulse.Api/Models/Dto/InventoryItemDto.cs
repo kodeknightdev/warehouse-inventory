@@ -10,6 +10,8 @@ namespace WarehousePulse.Api.Models.Dto
         public string Description { get; set; }
         public string Category { get; set; }
         public int QuantityOnHand { get; set; }
+        public int ReorderLevel { get; set; }
+        public bool IsLowStock { get; set; }
         public string UnitOfMeasure { get; set; }
         public decimal UnitCost { get; set; }
         public int? LocationId { get; set; }
@@ -26,6 +28,8 @@ namespace WarehousePulse.Api.Models.Dto
                 Description = item.Description,
                 Category = item.Category,
                 QuantityOnHand = item.QuantityOnHand,
+                ReorderLevel = item.ReorderLevel,
+                IsLowStock = item.ReorderLevel > 0 && item.QuantityOnHand <= item.ReorderLevel,
                 UnitOfMeasure = item.UnitOfMeasure,
                 UnitCost = item.UnitCost,
                 LocationId = item.LocationId,

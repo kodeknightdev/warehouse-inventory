@@ -129,6 +129,10 @@
     <Compile Include="Migrations\202001231647052_AddTrackingEvents.Designer.cs">
       <DependentUpon>202001231647052_AddTrackingEvents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002042031145_AddReorderLevel.cs" />
+    <Compile Include="Migrations\202002042031145_AddReorderLevel.Designer.cs">
+      <DependentUpon>202002042031145_AddReorderLevel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dto\AdjustStockRequest.cs" />
     <Compile Include="Models\Dto\CreateShipmentRequest.cs" />
@@ -164,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001231647052_AddTrackingEvents.resx">
       <DependentUpon>202001231647052_AddTrackingEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002042031145_AddReorderLevel.resx">
+      <DependentUpon>202002042031145_AddReorderLevel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

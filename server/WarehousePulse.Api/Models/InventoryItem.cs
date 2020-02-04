@@ -23,6 +23,9 @@ namespace WarehousePulse.Api.Models
 
         public int QuantityOnHand { get; set; }
 
+        // alert when QuantityOnHand drops to or below this, 0 = no alerts
+        public int ReorderLevel { get; set; }
+
         // "ea", "box", "pallet" etc.
         [Required, StringLength(16)]
         public string UnitOfMeasure { get; set; }
