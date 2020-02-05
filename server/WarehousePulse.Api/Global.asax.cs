@@ -1,5 +1,6 @@
 using System.Web;
 using System.Web.Http;
+using WarehousePulse.Api.Background;
 
 namespace WarehousePulse.Api
 {
@@ -9,6 +10,8 @@ namespace WarehousePulse.Api
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AutofacConfig.Register(GlobalConfiguration.Configuration);
+
+            LowStockMonitor.Start();
         }
     }
 }
