@@ -134,6 +134,10 @@
     <Compile Include="Migrations\202002042031145_AddReorderLevel.Designer.cs">
       <DependentUpon>202002042031145_AddReorderLevel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002061844327_AddLowStockAlerts.cs" />
+    <Compile Include="Migrations\202002061844327_AddLowStockAlerts.Designer.cs">
+      <DependentUpon>202002061844327_AddLowStockAlerts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dto\AdjustStockRequest.cs" />
     <Compile Include="Models\Dto\CreateShipmentRequest.cs" />
@@ -144,12 +148,14 @@
     <Compile Include="Models\Dto\UpdateShipmentStatusRequest.cs" />
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\LowStockAlert.cs" />
     <Compile Include="Models\Shipment.cs" />
     <Compile Include="Models\ShipmentLine.cs" />
     <Compile Include="Models\ShipmentStatus.cs" />
     <Compile Include="Models\StockMovement.cs" />
     <Compile Include="Models\TrackingEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\LowStockChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202001081448123_InitialCreate.resx">
@@ -172,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002042031145_AddReorderLevel.resx">
       <DependentUpon>202002042031145_AddReorderLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002061844327_AddLowStockAlerts.resx">
+      <DependentUpon>202002061844327_AddLowStockAlerts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

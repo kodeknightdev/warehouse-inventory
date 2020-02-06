@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Web.Hosting;
 using WarehousePulse.Api.Data;
+using WarehousePulse.Api.Services;
 
 namespace WarehousePulse.Api.Background
 {
@@ -65,13 +65,9 @@ namespace WarehousePulse.Api.Background
         {
             using (var db = new WarehouseContext())
             {
-                var low = db.InventoryItems
-                    .Where(i => i.ReorderLevel > 0 && i.QuantityOnHand <= i.ReorderLevel)
-                    .Select(i => new { i.Sku, i.QuantityOnHand, i.ReorderLevel })
-                    .ToList();
-
-                foreach (var item in low)
-                    Trace.TraceWarning("Low stock: {0} has {1} (reorder at {2})", item.Sku, item.QuantityOnHand, item.ReorderLevel);
+                var raised = new LowStockChecker(db).Run(DateTime.UtcNow);
+                if (raised > 0)
+                    Trace.TraceWarning("Low stock check raised {0} alert(s)", raised);
             }
         }
 
