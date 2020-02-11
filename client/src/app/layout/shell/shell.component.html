@@ -1,0 +1,25 @@
+<mat-sidenav-container class="shell">
+  <mat-sidenav mode="side" opened class="shell-nav">
+    <div class="brand">Warehouse Pulse</div>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon matListIcon>dashboard</mat-icon> Dashboard
+      </a>
+      <a mat-list-item routerLink="/inventory" routerLinkActive="active">
+        <mat-icon matListIcon>inventory</mat-icon> Inventory
+      </a>
+      <a mat-list-item routerLink="/shipments" routerLinkActive="active">
+        <mat-icon matListIcon>local_shipping</mat-icon> Shipments
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span>{{ title }}</span>
+    </mat-toolbar>
+    <main class="content">
+      <ng-content></ng-content>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
