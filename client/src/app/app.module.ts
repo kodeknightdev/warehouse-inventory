@@ -7,11 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { ShellComponent } from './layout/shell/shell.component';
+import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ShellComponent
+    ShellComponent,
+    InventoryListComponent
   ],
   imports: [
     BrowserModule,

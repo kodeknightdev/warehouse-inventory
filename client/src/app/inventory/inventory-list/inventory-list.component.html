@@ -1,0 +1,41 @@
+<div class="page-header">
+  <h2>Inventory</h2>
+  <span class="count">{{ total }} items</span>
+</div>
+
+<table mat-table [dataSource]="items" class="mat-elevation-z1 full-width">
+  <ng-container matColumnDef="sku">
+    <th mat-header-cell *matHeaderCellDef>SKU</th>
+    <td mat-cell *matCellDef="let item" class="mono">{{ item.sku }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef>Category</th>
+    <td mat-cell *matCellDef="let item">{{ item.category }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="location">
+    <th mat-header-cell *matHeaderCellDef>Location</th>
+    <td mat-cell *matCellDef="let item" class="mono">{{ item.locationCode || '-' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="quantityOnHand">
+    <th mat-header-cell *matHeaderCellDef class="num">On hand</th>
+    <td mat-cell *matCellDef="let item" class="num" [class.low]="item.isLowStock">
+      {{ item.quantityOnHand | number }} {{ item.unitOfMeasure }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="reorderLevel">
+    <th mat-header-cell *matHeaderCellDef class="num">Reorder at</th>
+    <td mat-cell *matCellDef="let item" class="num">{{ item.reorderLevel || '-' }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
