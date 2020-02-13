@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { InventoryItem, PagedResult } from '../models/inventory-item';
+import { InventoryItem, ItemQuery, PagedResult } from '../models/inventory-item';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,21 @@ export class InventoryService {
 
   constructor(private http: HttpClient) { }
 
-  getItems(page = 1, pageSize = 25): Observable<PagedResult<InventoryItem>> {
-    const params = new HttpParams()
-      .set('page', String(page))
-      .set('pageSize', String(pageSize));
+  getItems(query: ItemQuery = {}): Observable<PagedResult<InventoryItem>> {
+    let params = new HttpParams()
+      .set('page', String(query.page || 1))
+      .set('pageSize', String(query.pageSize || 25));
+    if (query.search) {
+      params = params.set('search', query.search);
+    }
+    if (query.category) {
+      params = params.set('category', query.category);
+    }
     return this.http.get<PagedResult<InventoryItem>>(this.baseUrl, { params });
+  }
+
+  getCategories(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/categories`);
   }
 
   getItem(id: number): Observable<InventoryItem> {

@@ -8,6 +8,13 @@
   .count { color: #78909c; }
 }
 
+.filters {
+  display: flex;
+  gap: 16px;
+
+  mat-form-field { width: 260px; }
+}
+
 .full-width {
   width: 100%;
 }

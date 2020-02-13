@@ -20,3 +20,10 @@ export interface PagedResult<T> {
   page: number;
   pageSize: number;
 }
+
+export interface ItemQuery {
+  search?: string;
+  category?: string;
+  page?: number;
+  pageSize?: number;
+}
