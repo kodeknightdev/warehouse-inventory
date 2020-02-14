@@ -1,11 +1,11 @@
 .page-header {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
   margin-bottom: 16px;
 
-  h2 { margin: 0; }
+  h2 { margin: 0 12px 0 0; }
   .count { color: #78909c; }
+  .spacer { flex: 1; }
 }
 
 .filters {
@@ -31,4 +31,9 @@
 td.low {
   color: #c62828;
   font-weight: 500;
+}
+
+td.actions {
+  width: 48px;
+  text-align: right;
 }

@@ -27,3 +27,15 @@ export interface ItemQuery {
   page?: number;
   pageSize?: number;
 }
+
+export interface SaveItemRequest {
+  sku: string;
+  name: string;
+  description?: string;
+  category?: string;
+  quantityOnHand: number;
+  reorderLevel: number;
+  unitOfMeasure: string;
+  unitCost: number;
+  locationId?: number;
+}

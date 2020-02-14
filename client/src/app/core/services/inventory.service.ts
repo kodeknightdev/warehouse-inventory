@@ -3,7 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { InventoryItem, ItemQuery, PagedResult } from '../models/inventory-item';
+import { InventoryItem, ItemQuery, PagedResult, SaveItemRequest } from '../models/inventory-item';
+import { Location } from '../models/location';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,18 @@ export class InventoryService {
 
   getItem(id: number): Observable<InventoryItem> {
     return this.http.get<InventoryItem>(`${this.baseUrl}/${id}`);
+  }
+
+  createItem(item: SaveItemRequest): Observable<InventoryItem> {
+    return this.http.post<InventoryItem>(this.baseUrl, item);
+  }
+
+  updateItem(id: number, item: SaveItemRequest): Observable<InventoryItem> {
+    return this.http.put<InventoryItem>(`${this.baseUrl}/${id}`, item);
+  }
+
+  // TODO: move to its own service if locations get more screens
+  getLocations(): Observable<Location[]> {
+    return this.http.get<Location[]>(`${environment.apiUrl}/locations`);
   }
 }

@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { ShellComponent } from './layout/shell/shell.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
+import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShellComponent,
-    InventoryListComponent
+    InventoryListComponent,
+    ItemFormDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +27,7 @@ import { InventoryListComponent } from './inventory/inventory-list/inventory-lis
     MaterialModule
   ],
   providers: [],
+  entryComponents: [ItemFormDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
