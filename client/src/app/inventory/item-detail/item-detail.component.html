@@ -1,0 +1,43 @@
+<a mat-button routerLink="/inventory"><mat-icon>arrow_back</mat-icon> Inventory</a>
+
+<mat-card *ngIf="item">
+  <mat-card-header>
+    <mat-card-title>{{ item.name }}</mat-card-title>
+    <mat-card-subtitle class="mono">{{ item.sku }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p *ngIf="item.description">{{ item.description }}</p>
+
+    <dl class="facts">
+      <div>
+        <dt>On hand</dt>
+        <dd [class.low]="item.isLowStock">{{ item.quantityOnHand | number }} {{ item.unitOfMeasure }}</dd>
+      </div>
+      <div>
+        <dt>Reorder level</dt>
+        <dd>{{ item.reorderLevel || 'not set' }}</dd>
+      </div>
+      <div>
+        <dt>Location</dt>
+        <dd class="mono">{{ item.locationCode || '-' }}</dd>
+      </div>
+      <div>
+        <dt>Category</dt>
+        <dd>{{ item.category || '-' }}</dd>
+      </div>
+      <div>
+        <dt>Unit cost</dt>
+        <dd>{{ item.unitCost | currency }}</dd>
+      </div>
+      <div>
+        <dt>Stock value</dt>
+        <dd>{{ item.unitCost * item.quantityOnHand | currency }}</dd>
+      </div>
+    </dl>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-stroked-button (click)="edit()"><mat-icon>edit</mat-icon> Edit</button>
+  </mat-card-actions>
+</mat-card>

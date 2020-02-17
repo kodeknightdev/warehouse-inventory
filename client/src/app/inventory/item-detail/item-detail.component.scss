@@ -1,0 +1,30 @@
+mat-card {
+  margin-top: 12px;
+  max-width: 760px;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 16px 0 0;
+
+  dt {
+    color: #78909c;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 4px 0 0;
+    font-size: 18px;
+  }
+
+  dd.low {
+    color: #c62828;
+  }
+}
+
+.mono {
+  font-family: 'Roboto Mono', Consolas, monospace;
+}

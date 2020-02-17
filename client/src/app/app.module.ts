@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { ShellComponent } from './layout/shell/shell.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
+import { ItemDetailComponent } from './inventory/item-detail/item-detail.component';
 import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-dialog.component';
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     AppComponent,
     ShellComponent,
     InventoryListComponent,
-    ItemFormDialogComponent
+    ItemFormDialogComponent,
+    ItemDetailComponent
   ],
   imports: [
     BrowserModule,
