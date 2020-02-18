@@ -103,8 +103,8 @@ namespace WarehousePulse.Api.Controllers
             if (shipment == null)
                 return NotFound();
 
-            if (shipment.Status == ShipmentStatus.Cancelled)
-                return BadRequest("Shipment is cancelled");
+            if (!ShipmentStatusRules.CanMove(shipment.Status, request.Status))
+                return BadRequest(string.Format("Can't change status from {0} to {1}", shipment.Status, request.Status));
 
             // outbound stock leaves when the truck leaves, inbound stock counts once it's delivered
             var outboundDispatch = shipment.Direction == ShipmentDirection.Outbound

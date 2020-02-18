@@ -153,6 +153,7 @@
     <Compile Include="Models\Shipment.cs" />
     <Compile Include="Models\ShipmentLine.cs" />
     <Compile Include="Models\ShipmentStatus.cs" />
+    <Compile Include="Models\ShipmentStatusRules.cs" />
     <Compile Include="Models\StockMovement.cs" />
     <Compile Include="Models\TrackingEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
