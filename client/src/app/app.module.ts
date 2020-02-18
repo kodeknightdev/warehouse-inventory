@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { ShellComponent } from './layout/shell/shell.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
+import { AdjustStockDialogComponent } from './inventory/adjust-stock-dialog/adjust-stock-dialog.component';
 import { ItemDetailComponent } from './inventory/item-detail/item-detail.component';
 import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-dialog.component';
 
@@ -18,7 +19,8 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     ShellComponent,
     InventoryListComponent,
     ItemFormDialogComponent,
-    ItemDetailComponent
+    ItemDetailComponent,
+    AdjustStockDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,7 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     MaterialModule
   ],
   providers: [],
-  entryComponents: [ItemFormDialogComponent],
+  entryComponents: [ItemFormDialogComponent, AdjustStockDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { InventoryItem } from '../../core/models/inventory-item';
 import { InventoryService } from '../../core/services/inventory.service';
+import { AdjustStockDialogComponent } from '../adjust-stock-dialog/adjust-stock-dialog.component';
 import { ItemFormDialogComponent } from '../item-form-dialog/item-form-dialog.component';
 
 @Component({
@@ -35,6 +36,16 @@ export class ItemDetailComponent implements OnInit {
       .subscribe(saved => {
         if (saved) {
           this.item = saved;
+        }
+      });
+  }
+
+  adjust() {
+    this.dialog.open(AdjustStockDialogComponent, { data: this.item, width: '420px' })
+      .afterClosed()
+      .subscribe(updated => {
+        if (updated) {
+          this.item = updated;
         }
       });
   }

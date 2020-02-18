@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Adjust stock - {{ item.sku }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <mat-radio-group formControlName="direction" class="direction">
+      <mat-radio-button value="in">Receive (+)</mat-radio-button>
+      <mat-radio-button value="out">Pick / write off (-)</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field class="full">
+      <mat-label>Quantity ({{ item.unitOfMeasure }})</mat-label>
+      <input matInput type="number" min="1" formControlName="quantity">
+    </mat-form-field>
+
+    <mat-form-field class="full">
+      <mat-label>Reason</mat-label>
+      <input matInput formControlName="reason" placeholder="PO number, damaged, cycle count...">
+    </mat-form-field>
+
+    <p>
+      {{ item.quantityOnHand }} &rarr;
+      <strong [style.color]="resulting < 0 ? '#c62828' : null">{{ resulting }}</strong>
+      {{ item.unitOfMeasure }}
+    </p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Cancel</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="saving || form.invalid || resulting < 0">Apply</button>
+  </mat-dialog-actions>
+</form>

@@ -43,6 +43,10 @@ export class InventoryService {
     return this.http.put<InventoryItem>(`${this.baseUrl}/${id}`, item);
   }
 
+  adjustStock(id: number, delta: number, reason?: string): Observable<InventoryItem> {
+    return this.http.post<InventoryItem>(`${this.baseUrl}/${id}/adjust`, { delta, reason });
+  }
+
   // TODO: move to its own service if locations get more screens
   getLocations(): Observable<Location[]> {
     return this.http.get<Location[]>(`${environment.apiUrl}/locations`);
