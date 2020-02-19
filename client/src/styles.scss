@@ -6,3 +6,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background:
 
 .full { width: 100%; }
 .direction { display: flex; gap: 24px; margin-bottom: 16px; }
+
+.snack-error { background: #b71c1c; color: #fff; }
+.snack-error .mat-simple-snackbar-action { color: #ffcdd2; }
