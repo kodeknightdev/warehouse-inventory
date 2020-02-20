@@ -1,0 +1,37 @@
+<h2>Dashboard</h2>
+
+<ng-container *ngIf="summary$ | async as s">
+  <div class="tiles">
+    <mat-card class="tile">
+      <div class="label">SKUs</div>
+      <div class="value">{{ s.totalSkus | number }}</div>
+    </mat-card>
+    <mat-card class="tile">
+      <div class="label">Units on hand</div>
+      <div class="value">{{ s.totalUnits | number }}</div>
+    </mat-card>
+    <mat-card class="tile">
+      <div class="label">Stock value</div>
+      <div class="value">{{ s.stockValue | currency:'USD':'symbol':'1.0-0' }}</div>
+    </mat-card>
+    <mat-card class="tile" [class.warn]="s.lowStockItems > 0" routerLink="/inventory">
+      <div class="label">Low stock items</div>
+      <div class="value">{{ s.lowStockItems }}</div>
+    </mat-card>
+  </div>
+
+  <div class="tiles">
+    <mat-card class="tile">
+      <div class="label">Shipments pending</div>
+      <div class="value">{{ s.shipments.pending }}</div>
+    </mat-card>
+    <mat-card class="tile">
+      <div class="label">In transit</div>
+      <div class="value">{{ s.shipments.inTransit }}</div>
+    </mat-card>
+    <mat-card class="tile">
+      <div class="label">Delivered</div>
+      <div class="value">{{ s.shipments.delivered }}</div>
+    </mat-card>
+  </div>
+</ng-container>

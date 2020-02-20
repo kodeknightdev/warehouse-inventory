@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { ShellComponent } from './layout/shell/shell.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
@@ -21,7 +22,8 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     InventoryListComponent,
     ItemFormDialogComponent,
     ItemDetailComponent,
-    AdjustStockDialogComponent
+    AdjustStockDialogComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

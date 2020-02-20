@@ -1,0 +1,30 @@
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tile {
+  .label {
+    color: #78909c;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .value {
+    font-size: 28px;
+    font-weight: 300;
+    margin-top: 8px;
+  }
+
+  &.warn .value {
+    color: #c62828;
+    font-weight: 400;
+  }
+
+  &[routerLink] {
+    cursor: pointer;
+  }
+}
