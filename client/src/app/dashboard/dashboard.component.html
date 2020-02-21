@@ -34,4 +34,9 @@
       <div class="value">{{ s.shipments.delivered }}</div>
     </mat-card>
   </div>
+
+  <mat-card class="chart-card">
+    <mat-card-subtitle>Stock value by category</mat-card-subtitle>
+    <app-category-chart [data]="s.stockByCategory"></app-category-chart>
+  </mat-card>
 </ng-container>

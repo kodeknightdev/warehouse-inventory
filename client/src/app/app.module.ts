@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CategoryChartComponent } from './dashboard/category-chart/category-chart.component';
 import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { ShellComponent } from './layout/shell/shell.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
@@ -23,7 +25,8 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     ItemFormDialogComponent,
     ItemDetailComponent,
     AdjustStockDialogComponent,
-    DashboardComponent
+    DashboardComponent,
+    CategoryChartComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ChartsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
