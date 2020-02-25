@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
+import { ShipmentListComponent } from './shipments/shipment-list/shipment-list.component';
 import { ItemDetailComponent } from './inventory/item-detail/item-detail.component';
 
 const routes: Routes = [
@@ -10,6 +11,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'inventory', component: InventoryListComponent },
   { path: 'inventory/:id', component: ItemDetailComponent },
+  { path: 'shipments', component: ShipmentListComponent },
   { path: '**', redirectTo: 'dashboard' }
 ];
 
