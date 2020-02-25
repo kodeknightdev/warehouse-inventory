@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.Threading;
 using System.Web.Hosting;
@@ -22,12 +23,25 @@ namespace WarehousePulse.Api.Background
 
         private LowStockMonitor()
         {
-            timer = new Timer(OnTick, null, TimeSpan.FromSeconds(30), TimeSpan.FromMinutes(5));
+            timer = new Timer(OnTick, null, TimeSpan.FromSeconds(30), CheckInterval());
+        }
+
+        private static TimeSpan CheckInterval()
+        {
+            int minutes;
+            var setting = ConfigurationManager.AppSettings["LowStockCheckMinutes"];
+            if (!int.TryParse(setting, out minutes) || minutes < 1)
+                minutes = 5;
+            return TimeSpan.FromMinutes(minutes);
         }
 
         public static void Start()
         {
             if (instance != null)
+                return;
+
+            var enabled = ConfigurationManager.AppSettings["LowStockMonitorEnabled"];
+            if (string.Equals(enabled, "false", StringComparison.OrdinalIgnoreCase))
                 return;
 
             instance = new LowStockMonitor();
