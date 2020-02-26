@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CategoryChartComponent } from './dashboard/category-chart/category-chart.component';
 import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { ShipmentListComponent } from './shipments/shipment-list/shipment-list.component';
+import { ShipmentDetailComponent } from './shipments/shipment-detail/shipment-detail.component';
 import { StatusChipComponent } from './shipments/status-chip/status-chip.component';
 import { ShellComponent } from './layout/shell/shell.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
@@ -30,7 +31,8 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     DashboardComponent,
     CategoryChartComponent,
     ShipmentListComponent,
-    StatusChipComponent
+    StatusChipComponent,
+    ShipmentDetailComponent
   ],
   imports: [
     BrowserModule,

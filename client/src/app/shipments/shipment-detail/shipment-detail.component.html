@@ -1,0 +1,73 @@
+<a mat-button routerLink="/shipments"><mat-icon>arrow_back</mat-icon> Shipments</a>
+
+<div class="layout" *ngIf="shipment">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="mono">{{ shipment.reference }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ shipment.direction }} &middot; <app-status-chip [status]="shipment.status"></app-status-chip>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <dl class="facts">
+        <div>
+          <dt>{{ shipment.direction === 'Inbound' ? 'From' : 'To' }}</dt>
+          <dd>{{ shipment.destination }}</dd>
+        </div>
+        <div>
+          <dt>Carrier</dt>
+          <dd>{{ shipment.carrier || '-' }} <span class="mono" *ngIf="shipment.trackingNumber">({{ shipment.trackingNumber }})</span></dd>
+        </div>
+        <div>
+          <dt>Expected</dt>
+          <dd>{{ (shipment.expectedAt | date:'mediumDate') || '-' }}</dd>
+        </div>
+        <div>
+          <dt>Shipped</dt>
+          <dd>{{ (shipment.shippedAt | date:'medium') || '-' }}</dd>
+        </div>
+        <div>
+          <dt>Delivered</dt>
+          <dd>{{ (shipment.deliveredAt | date:'medium') || '-' }}</dd>
+        </div>
+      </dl>
+
+      <table mat-table [dataSource]="shipment.lines" class="lines">
+        <ng-container matColumnDef="sku">
+          <th mat-header-cell *matHeaderCellDef>SKU</th>
+          <td mat-cell *matCellDef="let l" class="mono">
+            <a [routerLink]="['/inventory', l.inventoryItemId]">{{ l.sku }}</a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Item</th>
+          <td mat-cell *matCellDef="let l">{{ l.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef class="num">Qty</th>
+          <td mat-cell *matCellDef="let l" class="num">{{ l.quantity | number }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="lineColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: lineColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="timeline-card">
+    <mat-card-subtitle>Tracking</mat-card-subtitle>
+    <ol class="timeline">
+      <li *ngFor="let e of shipment.events; let first = first" [class.latest]="first">
+        <div class="dot"></div>
+        <div class="body">
+          <div class="head">
+            <app-status-chip [status]="e.status"></app-status-chip>
+            <span class="when">{{ e.occurredAt | date:'MMM d, HH:mm' }}</span>
+          </div>
+          <div class="where" *ngIf="e.location">{{ e.location }}</div>
+          <div class="note" *ngIf="e.note">{{ e.note }}</div>
+        </div>
+      </li>
+    </ol>
+  </mat-card>
+</div>

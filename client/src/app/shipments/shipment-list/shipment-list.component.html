@@ -10,7 +10,9 @@
 <table mat-table [dataSource]="shipments" class="mat-elevation-z1 full-width">
   <ng-container matColumnDef="reference">
     <th mat-header-cell *matHeaderCellDef>Reference</th>
-    <td mat-cell *matCellDef="let s" class="mono">{{ s.reference }}</td>
+    <td mat-cell *matCellDef="let s" class="mono">
+      <a [routerLink]="['/shipments', s.id]">{{ s.reference }}</a>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="direction">
