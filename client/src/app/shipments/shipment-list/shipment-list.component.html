@@ -1,5 +1,8 @@
 <div class="page-header">
   <h2>Shipments</h2>
+  <button mat-flat-button color="primary" routerLink="/shipments/new">
+    <mat-icon>add</mat-icon> New shipment
+  </button>
 </div>
 
 <mat-button-toggle-group [(ngModel)]="status" (change)="load()" class="status-filter">

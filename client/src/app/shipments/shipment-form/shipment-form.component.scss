@@ -1,0 +1,25 @@
+mat-card {
+  max-width: 820px;
+  margin-top: 12px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+
+  .grow { flex: 1; }
+  .qty { width: 120px; }
+}
+
+h3 {
+  margin: 16px 0 4px;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

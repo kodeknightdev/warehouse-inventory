@@ -13,6 +13,7 @@ import { CategoryChartComponent } from './dashboard/category-chart/category-char
 import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { ShipmentListComponent } from './shipments/shipment-list/shipment-list.component';
 import { ShipmentDetailComponent } from './shipments/shipment-detail/shipment-detail.component';
+import { ShipmentFormComponent } from './shipments/shipment-form/shipment-form.component';
 import { StatusChipComponent } from './shipments/status-chip/status-chip.component';
 import { ShellComponent } from './layout/shell/shell.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
@@ -32,7 +33,8 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     CategoryChartComponent,
     ShipmentListComponent,
     StatusChipComponent,
-    ShipmentDetailComponent
+    ShipmentDetailComponent,
+    ShipmentFormComponent
   ],
   imports: [
     BrowserModule,
