@@ -1,0 +1,18 @@
+<div class="banner" *ngIf="alerts.length">
+  <div class="summary">
+    <mat-icon>warning</mat-icon>
+    <span>
+      <strong>{{ alerts.length }}</strong>
+      {{ alerts.length === 1 ? 'item is' : 'items are' }} at or below the reorder level
+    </span>
+    <span class="spacer"></span>
+    <button mat-button (click)="expanded = !expanded">{{ expanded ? 'Hide' : 'Show' }}</button>
+  </div>
+
+  <ul *ngIf="expanded">
+    <li *ngFor="let a of alerts">
+      <a class="mono" [routerLink]="['/inventory', a.inventoryItemId]">{{ a.sku }}</a>
+      {{ a.name }} &mdash; {{ a.currentQuantity }} left (reorder at {{ a.reorderLevel }})
+    </li>
+  </ul>
+</div>

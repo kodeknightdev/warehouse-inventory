@@ -15,6 +15,7 @@ import { ShipmentListComponent } from './shipments/shipment-list/shipment-list.c
 import { ShipmentDetailComponent } from './shipments/shipment-detail/shipment-detail.component';
 import { ShipmentFormComponent } from './shipments/shipment-form/shipment-form.component';
 import { StatusChipComponent } from './shipments/status-chip/status-chip.component';
+import { LowStockBannerComponent } from './layout/low-stock-banner/low-stock-banner.component';
 import { ShellComponent } from './layout/shell/shell.component';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
 import { AdjustStockDialogComponent } from './inventory/adjust-stock-dialog/adjust-stock-dialog.component';
@@ -34,7 +35,8 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     ShipmentListComponent,
     StatusChipComponent,
     ShipmentDetailComponent,
-    ShipmentFormComponent
+    ShipmentFormComponent,
+    LowStockBannerComponent
   ],
   imports: [
     BrowserModule,
