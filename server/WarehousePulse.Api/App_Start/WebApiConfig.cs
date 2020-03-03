@@ -20,6 +20,9 @@ namespace WarehousePulse.Api
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             // item -> location -> items -> ... blows up the serializer
             json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            // everything is stored as UTC but EF hands back Kind=Unspecified, so the "Z" was missing
+            // and the browser treated the times as local
+            json.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
 
             var origins = ConfigurationManager.AppSettings["CorsOrigins"];
             if (!string.IsNullOrWhiteSpace(origins))

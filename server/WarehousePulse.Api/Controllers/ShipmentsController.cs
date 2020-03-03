@@ -77,7 +77,7 @@ namespace WarehousePulse.Api.Controllers
             {
                 Status = ShipmentStatus.Pending,
                 Note = "Shipment created",
-                OccurredAt = DateTime.Now
+                OccurredAt = DateTime.UtcNow
             });
 
             foreach (var line in request.Lines)
@@ -137,16 +137,16 @@ namespace WarehousePulse.Api.Controllers
 
             shipment.Status = request.Status;
             if (request.Status == ShipmentStatus.InTransit && shipment.ShippedAt == null)
-                shipment.ShippedAt = DateTime.Now;
+                shipment.ShippedAt = DateTime.UtcNow;
             if (request.Status == ShipmentStatus.Delivered)
-                shipment.DeliveredAt = DateTime.Now;
+                shipment.DeliveredAt = DateTime.UtcNow;
 
             shipment.Events.Add(new TrackingEvent
             {
                 Status = request.Status,
                 Location = request.Location,
                 Note = request.Note,
-                OccurredAt = DateTime.Now
+                OccurredAt = DateTime.UtcNow
             });
 
             await db.SaveChangesAsync();
