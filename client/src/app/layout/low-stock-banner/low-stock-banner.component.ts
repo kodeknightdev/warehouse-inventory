@@ -15,6 +15,6 @@ export class LowStockBannerComponent implements OnInit {
   constructor(private alertService: AlertService) { }
 
   ngOnInit() {
-    this.alertService.getOpenAlerts().subscribe(a => this.alerts = a);
+    this.alertService.openAlerts$.subscribe(a => this.alerts = a);
   }
 }

@@ -17,6 +17,10 @@
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <span>{{ title }}</span>
+      <span class="toolbar-spacer"></span>
+      <button mat-icon-button routerLink="/dashboard" title="Low stock alerts">
+        <mat-icon [matBadge]="alertCount$ | async" [matBadgeHidden]="!(alertCount$ | async)" matBadgeColor="warn">notifications</mat-icon>
+      </button>
     </mat-toolbar>
     <main class="content">
       <app-low-stock-banner></app-low-stock-banner>
