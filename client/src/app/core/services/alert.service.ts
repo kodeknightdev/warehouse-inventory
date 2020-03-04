@@ -26,4 +26,8 @@ export class AlertService {
   getOpenAlerts(): Observable<LowStockAlert[]> {
     return this.http.get<LowStockAlert[]>(this.baseUrl);
   }
+
+  acknowledge(id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${id}/acknowledge`, {});
+  }
 }

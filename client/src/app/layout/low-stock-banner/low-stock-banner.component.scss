@@ -21,6 +21,13 @@ ul {
   padding-left: 32px;
 
   li { padding: 2px 0; }
+  li.acked { opacity: 0.5; }
+
+  .ack {
+    line-height: 24px;
+    min-width: 0;
+    padding: 0 8px;
+  }
 }
 
 .mono {

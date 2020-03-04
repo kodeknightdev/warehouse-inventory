@@ -7,12 +7,14 @@
     </span>
     <span class="spacer"></span>
     <button mat-button (click)="expanded = !expanded">{{ expanded ? 'Hide' : 'Show' }}</button>
+    <button mat-button (click)="acknowledgeAll()">Acknowledge all</button>
   </div>
 
   <ul *ngIf="expanded">
-    <li *ngFor="let a of alerts">
+    <li *ngFor="let a of alerts" [class.acked]="a.acknowledgedAt">
       <a class="mono" [routerLink]="['/inventory', a.inventoryItemId]">{{ a.sku }}</a>
       {{ a.name }} &mdash; {{ a.currentQuantity }} left (reorder at {{ a.reorderLevel }})
+      <button mat-button class="ack" *ngIf="!a.acknowledgedAt" (click)="acknowledge(a)">Acknowledge</button>
     </li>
   </ul>
 </div>
