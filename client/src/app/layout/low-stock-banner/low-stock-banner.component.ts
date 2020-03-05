@@ -12,6 +12,11 @@ export class LowStockBannerComponent implements OnInit {
   alerts: LowStockAlert[] = [];
   expanded = false;
 
+  // acknowledged ones stay in the list until the next poll, don't count them
+  get open(): LowStockAlert[] {
+    return this.alerts.filter(a => !a.acknowledgedAt);
+  }
+
   constructor(private alertService: AlertService) { }
 
   ngOnInit() {
@@ -25,6 +30,6 @@ export class LowStockBannerComponent implements OnInit {
   }
 
   acknowledgeAll() {
-    this.alerts.filter(a => !a.acknowledgedAt).forEach(a => this.acknowledge(a));
+    this.open.forEach(a => this.acknowledge(a));
   }
 }

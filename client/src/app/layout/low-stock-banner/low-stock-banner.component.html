@@ -1,9 +1,9 @@
-<div class="banner" *ngIf="alerts.length">
+<div class="banner" *ngIf="open.length">
   <div class="summary">
     <mat-icon>warning</mat-icon>
     <span>
-      <strong>{{ alerts.length }}</strong>
-      {{ alerts.length === 1 ? 'item is' : 'items are' }} at or below the reorder level
+      <strong>{{ open.length }}</strong>
+      {{ open.length === 1 ? 'item is' : 'items are' }} at or below the reorder level
     </span>
     <span class="spacer"></span>
     <button mat-button (click)="expanded = !expanded">{{ expanded ? 'Hide' : 'Show' }}</button>
@@ -11,10 +11,10 @@
   </div>
 
   <ul *ngIf="expanded">
-    <li *ngFor="let a of alerts" [class.acked]="a.acknowledgedAt">
+    <li *ngFor="let a of open">
       <a class="mono" [routerLink]="['/inventory', a.inventoryItemId]">{{ a.sku }}</a>
       {{ a.name }} &mdash; {{ a.currentQuantity }} left (reorder at {{ a.reorderLevel }})
-      <button mat-button class="ack" *ngIf="!a.acknowledgedAt" (click)="acknowledge(a)">Acknowledge</button>
+      <button mat-button class="ack" (click)="acknowledge(a)">Acknowledge</button>
     </li>
   </ul>
 </div>
