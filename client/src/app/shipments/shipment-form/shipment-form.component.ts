@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -23,7 +24,8 @@ export class ShipmentFormComponent implements OnInit {
     private fb: FormBuilder,
     private inventory: InventoryService,
     private shipments: ShipmentService,
-    private router: Router
+    private router: Router,
+    @Inject(LOCALE_ID) private locale: string
   ) { }
 
   get lines(): FormArray {
@@ -60,7 +62,7 @@ export class ShipmentFormComponent implements OnInit {
 
   available(itemId: number): number {
     const item = this.items.find(i => i.id === itemId);
-    return item ? item.quantityOnHand : null;
+    return item ? item.quantityOnHand : 0;
   }
 
   save() {
@@ -69,8 +71,14 @@ export class ShipmentFormComponent implements OnInit {
       return;
     }
 
+    // the datepicker gives us local midnight, toJSON() turns that into the previous day in UTC
+    const value = { ...this.form.value };
+    if (value.expectedAt) {
+      value.expectedAt = formatDate(value.expectedAt, 'yyyy-MM-dd', this.locale);
+    }
+
     this.saving = true;
-    this.shipments.create(this.form.value).subscribe(
+    this.shipments.create(value).subscribe(
       created => this.router.navigate(['/shipments', created.id]),
       () => this.saving = false
     );
