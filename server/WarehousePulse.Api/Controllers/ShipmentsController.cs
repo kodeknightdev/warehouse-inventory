@@ -6,6 +6,7 @@ using System.Web.Http;
 using WarehousePulse.Api.Data;
 using WarehousePulse.Api.Models;
 using WarehousePulse.Api.Models.Dto;
+using WarehousePulse.Api.Services;
 
 namespace WarehousePulse.Api.Controllers
 {
@@ -13,10 +14,12 @@ namespace WarehousePulse.Api.Controllers
     public class ShipmentsController : ApiController
     {
         private readonly WarehouseContext db;
+        private readonly StockService stock;
 
-        public ShipmentsController(WarehouseContext db)
+        public ShipmentsController(WarehouseContext db, StockService stock)
         {
             this.db = db;
+            this.stock = stock;
         }
 
         [HttpGet, Route("")]
@@ -115,23 +118,15 @@ namespace WarehousePulse.Api.Controllers
             if (outboundDispatch || inboundReceipt)
             {
                 var sign = outboundDispatch ? -1 : 1;
-                foreach (var line in shipment.Lines)
+                try
                 {
-                    var item = line.InventoryItem;
-                    var newQty = item.QuantityOnHand + sign * line.Quantity;
-                    if (newQty < 0)
-                        return BadRequest("Not enough stock for " + item.Sku);
-
-                    item.QuantityOnHand = newQty;
-                    item.UpdatedAt = DateTime.UtcNow;
-                    db.StockMovements.Add(new StockMovement
-                    {
-                        InventoryItemId = item.Id,
-                        Delta = sign * line.Quantity,
-                        QuantityAfter = newQty,
-                        Reason = "Shipment " + shipment.Reference,
-                        CreatedAt = DateTime.UtcNow
-                    });
+                    foreach (var line in shipment.Lines)
+                        db.StockMovements.Add(stock.Apply(line.InventoryItem, sign * line.Quantity, "Shipment " + shipment.Reference, DateTime.UtcNow));
+                }
+                catch (InsufficientStockException ex)
+                {
+                    // nothing has been saved yet, the context is thrown away with the request
+                    return BadRequest(ex.Message);
                 }
             }
 

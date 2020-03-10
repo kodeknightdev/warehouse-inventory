@@ -7,6 +7,7 @@ using WarehousePulse.Api.Controllers;
 using WarehousePulse.Api.Data;
 using WarehousePulse.Api.Models;
 using WarehousePulse.Api.Models.Dto;
+using WarehousePulse.Api.Services;
 
 namespace WarehousePulse.Tests.Controllers
 {
@@ -32,7 +33,7 @@ namespace WarehousePulse.Tests.Controllers
         [TestMethod]
         public async Task Adjust_AddsToQuantity_AndRecordsMovement()
         {
-            var controller = new InventoryItemsController(repo.Object);
+            var controller = new InventoryItemsController(repo.Object, new StockService());
 
             var result = await controller.Adjust(7, new AdjustStockRequest { Delta = 5, Reason = "PO 1001" });
 
@@ -46,7 +47,7 @@ namespace WarehousePulse.Tests.Controllers
         [TestMethod]
         public async Task Adjust_CantGoBelowZero()
         {
-            var controller = new InventoryItemsController(repo.Object);
+            var controller = new InventoryItemsController(repo.Object, new StockService());
 
             var result = await controller.Adjust(7, new AdjustStockRequest { Delta = -11 });
 
@@ -58,7 +59,7 @@ namespace WarehousePulse.Tests.Controllers
         [TestMethod]
         public async Task Adjust_ZeroDelta_IsBadRequest()
         {
-            var controller = new InventoryItemsController(repo.Object);
+            var controller = new InventoryItemsController(repo.Object, new StockService());
 
             var result = await controller.Adjust(7, new AdjustStockRequest { Delta = 0 });
 
@@ -68,7 +69,7 @@ namespace WarehousePulse.Tests.Controllers
         [TestMethod]
         public async Task Adjust_UnknownItem_IsNotFound()
         {
-            var controller = new InventoryItemsController(repo.Object);
+            var controller = new InventoryItemsController(repo.Object, new StockService());
 
             var result = await controller.Adjust(99, new AdjustStockRequest { Delta = 1 });
 

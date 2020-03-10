@@ -6,6 +6,7 @@ using System.Web.Http;
 using WarehousePulse.Api.Data;
 using WarehousePulse.Api.Models;
 using WarehousePulse.Api.Models.Dto;
+using WarehousePulse.Api.Services;
 
 namespace WarehousePulse.Api.Controllers
 {
@@ -13,10 +14,12 @@ namespace WarehousePulse.Api.Controllers
     public class InventoryItemsController : ApiController
     {
         private readonly IInventoryRepository repo;
+        private readonly StockService stock;
 
-        public InventoryItemsController(IInventoryRepository repo)
+        public InventoryItemsController(IInventoryRepository repo, StockService stock)
         {
             this.repo = repo;
+            this.stock = stock;
         }
 
         [HttpGet, Route("")]
@@ -122,20 +125,15 @@ namespace WarehousePulse.Api.Controllers
             if (item == null)
                 return NotFound();
 
-            var newQty = item.QuantityOnHand + request.Delta;
-            if (newQty < 0)
-                return BadRequest("Not enough stock, only " + item.QuantityOnHand + " on hand");
-
-            item.QuantityOnHand = newQty;
-            item.UpdatedAt = DateTime.UtcNow;
-            repo.AddMovement(new StockMovement
+            try
             {
-                InventoryItemId = item.Id,
-                Delta = request.Delta,
-                QuantityAfter = newQty,
-                Reason = request.Reason,
-                CreatedAt = item.UpdatedAt
-            });
+                repo.AddMovement(stock.Apply(item, request.Delta, request.Reason, DateTime.UtcNow));
+            }
+            catch (InsufficientStockException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
             await repo.SaveAsync();
 
             return Ok(InventoryItemDto.From(item));

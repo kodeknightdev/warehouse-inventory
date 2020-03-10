@@ -159,6 +159,7 @@
     <Compile Include="Models\TrackingEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LowStockChecker.cs" />
+    <Compile Include="Services\StockService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202001081448123_InitialCreate.resx">

@@ -3,6 +3,7 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 using WarehousePulse.Api.Data;
+using WarehousePulse.Api.Services;
 
 namespace WarehousePulse.Api
 {
@@ -16,6 +17,7 @@ namespace WarehousePulse.Api
 
             // one context per request, disposed by autofac at the end of the request
             builder.RegisterType<WarehouseContext>().AsSelf().InstancePerRequest();
+            builder.RegisterType<StockService>().AsSelf().SingleInstance();
             builder.RegisterType<InventoryRepository>().As<IInventoryRepository>().InstancePerRequest();
 
             var container = builder.Build();
