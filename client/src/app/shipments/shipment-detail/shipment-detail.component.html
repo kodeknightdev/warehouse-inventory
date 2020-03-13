@@ -21,7 +21,8 @@
         </div>
         <div>
           <dt>Expected</dt>
-          <dd>{{ (shipment.expectedAt | date:'mediumDate') || '-' }}</dd>
+          <!-- date only, comes back as midnight UTC so don't shift it into local time -->
+          <dd>{{ (shipment.expectedAt | date:'mediumDate':'UTC') || '-' }}</dd>
         </div>
         <div>
           <dt>Shipped</dt>
