@@ -108,6 +108,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\UnhandledExceptionFilter.cs" />
     <Compile Include="Migrations\202001081448123_InitialCreate.cs" />
     <Compile Include="Migrations\202001081448123_InitialCreate.Designer.cs">
       <DependentUpon>202001081448123_InitialCreate.cs</DependentUpon>

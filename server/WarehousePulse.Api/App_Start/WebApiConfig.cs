@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using WarehousePulse.Api.Infrastructure;
 
 namespace WarehousePulse.Api
 {
@@ -27,6 +28,8 @@ namespace WarehousePulse.Api
             var origins = ConfigurationManager.AppSettings["CorsOrigins"];
             if (!string.IsNullOrWhiteSpace(origins))
                 config.EnableCors(new EnableCorsAttribute(origins, "*", "*"));
+
+            config.Filters.Add(new UnhandledExceptionFilter());
 
             config.MapHttpAttributeRoutes();
 
