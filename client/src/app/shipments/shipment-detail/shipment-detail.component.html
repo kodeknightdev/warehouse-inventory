@@ -53,6 +53,12 @@
         <tr mat-row *matRowDef="let row; columns: lineColumns;"></tr>
       </table>
     </mat-card-content>
+
+    <mat-card-actions align="end" *ngIf="canUpdate">
+      <button mat-flat-button color="primary" (click)="updateStatus()">
+        <mat-icon>update</mat-icon> Update status
+      </button>
+    </mat-card-actions>
   </mat-card>
 
   <mat-card class="timeline-card">

@@ -1,6 +1,16 @@
 export type ShipmentStatus = 'Pending' | 'Picking' | 'Packed' | 'InTransit' | 'Delivered' | 'Cancelled';
 export type ShipmentDirection = 'Outbound' | 'Inbound';
 
+// keep in sync with ShipmentStatusRules on the server
+export const NEXT_STATUSES: { [from: string]: ShipmentStatus[] } = {
+  Pending: ['Picking', 'Packed', 'InTransit', 'Cancelled'],
+  Picking: ['Packed', 'InTransit', 'Cancelled'],
+  Packed: ['InTransit', 'Cancelled'],
+  InTransit: ['InTransit', 'Delivered'],
+  Delivered: [],
+  Cancelled: []
+};
+
 export interface Shipment {
   id: number;
   reference: string;

@@ -28,4 +28,8 @@ export class ShipmentService {
   create(request: CreateShipmentRequest): Observable<Shipment> {
     return this.http.post<Shipment>(this.baseUrl, request);
   }
+
+  updateStatus(id: number, status: ShipmentStatus, location?: string, note?: string): Observable<Shipment> {
+    return this.http.post<Shipment>(`${this.baseUrl}/${id}/status`, { status, location, note });
+  }
 }

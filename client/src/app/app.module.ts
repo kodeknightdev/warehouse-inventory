@@ -14,6 +14,7 @@ import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor
 import { ShipmentListComponent } from './shipments/shipment-list/shipment-list.component';
 import { ShipmentDetailComponent } from './shipments/shipment-detail/shipment-detail.component';
 import { ShipmentFormComponent } from './shipments/shipment-form/shipment-form.component';
+import { StatusUpdateDialogComponent } from './shipments/status-update-dialog/status-update-dialog.component';
 import { StatusChipComponent } from './shipments/status-chip/status-chip.component';
 import { LowStockBannerComponent } from './layout/low-stock-banner/low-stock-banner.component';
 import { ShellComponent } from './layout/shell/shell.component';
@@ -36,7 +37,8 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
     StatusChipComponent,
     ShipmentDetailComponent,
     ShipmentFormComponent,
-    LowStockBannerComponent
+    LowStockBannerComponent,
+    StatusUpdateDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,7 @@ import { ItemFormDialogComponent } from './inventory/item-form-dialog/item-form-
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],
-  entryComponents: [ItemFormDialogComponent, AdjustStockDialogComponent],
+  entryComponents: [ItemFormDialogComponent, AdjustStockDialogComponent, StatusUpdateDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

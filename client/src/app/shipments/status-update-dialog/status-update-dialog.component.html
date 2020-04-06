@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Update {{ shipment.reference }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <mat-form-field class="full">
+      <mat-label>New status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let s of options" [value]="s">{{ label(s) }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <p class="hint" *ngIf="shipment.direction === 'Outbound' && form.value.status === 'InTransit' && !shipment.shippedAt">
+      Stock will be deducted for all lines.
+    </p>
+    <p class="hint" *ngIf="shipment.direction === 'Inbound' && form.value.status === 'Delivered'">
+      Stock will be added for all lines.
+    </p>
+
+    <mat-form-field class="full">
+      <mat-label>Location</mat-label>
+      <input matInput formControlName="location" placeholder="e.g. Memphis hub">
+    </mat-form-field>
+
+    <mat-form-field class="full">
+      <mat-label>Note</mat-label>
+      <input matInput formControlName="note">
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Cancel</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="saving || form.invalid">Update</button>
+  </mat-dialog-actions>
+</form>
