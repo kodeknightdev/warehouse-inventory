@@ -8,7 +8,7 @@ namespace WarehousePulse.Api.Data
     public interface IInventoryRepository
     {
         Task<List<InventoryItem>> GetAllAsync();
-        Task<Tuple<List<InventoryItem>, int>> SearchAsync(string search, string category, int page, int pageSize);
+        Task<Tuple<List<InventoryItem>, int>> SearchAsync(string search, string category, int? locationId, int page, int pageSize);
         Task<InventoryItem> GetAsync(int id);
         Task<bool> SkuExistsAsync(string sku, int? exceptId = null);
         void Add(InventoryItem item);

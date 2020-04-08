@@ -22,7 +22,7 @@ namespace WarehousePulse.Api.Controllers
         {
             var locations = await db.Locations
                 .OrderBy(l => l.Code)
-                .Select(l => new { l.Id, l.Code, l.Zone, l.Description })
+                .Select(l => new { l.Id, l.Code, l.Zone, l.Description, ItemCount = l.Items.Count() })
                 .ToListAsync();
             return Ok(locations);
         }

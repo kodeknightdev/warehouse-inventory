@@ -24,7 +24,7 @@ namespace WarehousePulse.Api.Data
                 .ToListAsync();
         }
 
-        public async Task<Tuple<List<InventoryItem>, int>> SearchAsync(string search, string category, int page, int pageSize)
+        public async Task<Tuple<List<InventoryItem>, int>> SearchAsync(string search, string category, int? locationId, int page, int pageSize)
         {
             var query = db.InventoryItems.Include(i => i.Location);
 
@@ -36,6 +36,9 @@ namespace WarehousePulse.Api.Data
 
             if (!string.IsNullOrWhiteSpace(category))
                 query = query.Where(i => i.Category == category);
+
+            if (locationId.HasValue)
+                query = query.Where(i => i.LocationId == locationId);
 
             var total = await query.CountAsync();
             var items = await query
