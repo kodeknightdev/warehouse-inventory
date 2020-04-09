@@ -1,31 +1,8 @@
-.page-header {
-  display: flex;
-  align-items: baseline;
-  margin-bottom: 16px;
-
-  h2 { margin: 0 12px 0 0; }
-  .count { color: #78909c; }
-  .spacer { flex: 1; }
-}
-
 .filters {
   display: flex;
   gap: 16px;
 
   mat-form-field { width: 260px; }
-}
-
-.full-width {
-  width: 100%;
-}
-
-.mono {
-  font-family: 'Roboto Mono', Consolas, monospace;
-  font-size: 13px;
-}
-
-.num {
-  text-align: right;
 }
 
 td.low {

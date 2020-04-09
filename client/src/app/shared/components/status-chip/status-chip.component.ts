@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ShipmentStatus } from '../../core/models/shipment';
+import { ShipmentStatus } from '../../../core/models/shipment';
 
 @Component({
   selector: 'app-status-chip',

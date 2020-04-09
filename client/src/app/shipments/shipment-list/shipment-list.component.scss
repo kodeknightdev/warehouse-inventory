@@ -1,20 +1,5 @@
-.page-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-
-  h2 { margin: 0; flex: 1; }
-}
-
 .status-filter {
   margin-bottom: 16px;
-}
-
-.full-width { width: 100%; }
-
-.mono {
-  font-family: 'Roboto Mono', Consolas, monospace;
-  font-size: 13px;
 }
 
 .tracking {
@@ -28,8 +13,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.num { text-align: right; }
 
 .empty {
   color: #78909c;

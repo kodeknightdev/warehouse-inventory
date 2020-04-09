@@ -1,11 +1,8 @@
-<div class="page-header">
-  <h2>Inventory</h2>
-  <span class="count">{{ total }} items</span>
-  <span class="spacer"></span>
+<app-page-header title="Inventory" [subtitle]="total + ' items'">
   <button mat-flat-button color="primary" (click)="openForm()">
     <mat-icon>add</mat-icon> New item
   </button>
-</div>
+</app-page-header>
 
 <div class="filters">
   <mat-form-field appearance="outline">

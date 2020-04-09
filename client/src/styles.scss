@@ -4,7 +4,9 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #f5f6f8; }
 
-.full { width: 100%; }
+.full, .full-width { width: 100%; }
+.num { text-align: right; }
+.mono { font-family: 'Roboto Mono', Consolas, monospace; font-size: 13px; }
 .direction { display: flex; gap: 24px; margin-bottom: 16px; }
 
 .snack-error { background: #b71c1c; color: #fff; }
