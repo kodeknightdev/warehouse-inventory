@@ -40,5 +40,9 @@ namespace WarehousePulse.Api.Models
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        // two people picking the same item at the same time used to lose one of the updates
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

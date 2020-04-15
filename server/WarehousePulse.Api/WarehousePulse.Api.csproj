@@ -141,6 +141,10 @@
     <Compile Include="Migrations\202002061844327_AddLowStockAlerts.Designer.cs">
       <DependentUpon>202002061844327_AddLowStockAlerts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004151422563_AddItemRowVersion.cs" />
+    <Compile Include="Migrations\202004151422563_AddItemRowVersion.Designer.cs">
+      <DependentUpon>202004151422563_AddItemRowVersion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dto\AdjustStockRequest.cs" />
     <Compile Include="Models\Dto\CreateShipmentRequest.cs" />
@@ -186,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002061844327_AddLowStockAlerts.resx">
       <DependentUpon>202002061844327_AddLowStockAlerts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004151422563_AddItemRowVersion.resx">
+      <DependentUpon>202004151422563_AddItemRowVersion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,7 @@
 using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Net;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -144,7 +146,14 @@ namespace WarehousePulse.Api.Controllers
                 OccurredAt = DateTime.UtcNow
             });
 
-            await db.SaveChangesAsync();
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return Content(HttpStatusCode.Conflict, new { message = "Stock for one of the items changed while updating, try again." });
+            }
             return Ok(ShipmentDto.From(shipment));
         }
     }

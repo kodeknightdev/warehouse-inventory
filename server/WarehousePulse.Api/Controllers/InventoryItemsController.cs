@@ -1,4 +1,5 @@
 using System;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -109,8 +110,7 @@ namespace WarehousePulse.Api.Controllers
             existing.LocationId = item.LocationId;
             existing.UpdatedAt = DateTime.UtcNow;
 
-            await repo.SaveAsync();
-            return Ok(InventoryItemDto.From(existing));
+            return await SaveOrConflict(() => Ok(InventoryItemDto.From(existing)));
         }
 
         [HttpPost, Route("{id:int}/adjust")]
@@ -134,9 +134,20 @@ namespace WarehousePulse.Api.Controllers
                 return BadRequest(ex.Message);
             }
 
-            await repo.SaveAsync();
+            return await SaveOrConflict(() => Ok(InventoryItemDto.From(item)));
+        }
 
-            return Ok(InventoryItemDto.From(item));
+        private async Task<IHttpActionResult> SaveOrConflict(Func<IHttpActionResult> onSuccess)
+        {
+            try
+            {
+                await repo.SaveAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return Content(HttpStatusCode.Conflict, new { message = "The item was changed by someone else, reload and try again." });
+            }
+            return onSuccess();
         }
 
         [HttpGet, Route("{id:int}/movements")]
