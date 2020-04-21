@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { InventoryItem, ItemQuery, PagedResult, SaveItemRequest } from '../models/inventory-item';
+import { InventoryItem, ItemQuery, PagedResult, SaveItemRequest, StockMovement } from '../models/inventory-item';
 import { Location } from '../models/location';
 
 @Injectable({
@@ -45,6 +45,10 @@ export class InventoryService {
 
   adjustStock(id: number, delta: number, reason?: string): Observable<InventoryItem> {
     return this.http.post<InventoryItem>(`${this.baseUrl}/${id}/adjust`, { delta, reason });
+  }
+
+  getMovements(id: number, take = 50): Observable<StockMovement[]> {
+    return this.http.get<StockMovement[]>(`${this.baseUrl}/${id}/movements`, { params: { take: String(take) } });
   }
 
   // TODO: move to its own service if locations get more screens

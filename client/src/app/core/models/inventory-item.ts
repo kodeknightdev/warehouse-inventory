@@ -39,3 +39,11 @@ export interface SaveItemRequest {
   unitCost: number;
   locationId?: number;
 }
+
+export interface StockMovement {
+  id: number;
+  delta: number;
+  quantityAfter: number;
+  reason?: string;
+  createdAt: string;
+}

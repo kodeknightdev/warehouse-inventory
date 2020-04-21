@@ -42,3 +42,32 @@
     <button mat-flat-button color="primary" (click)="adjust()"><mat-icon>swap_vert</mat-icon> Adjust stock</button>
   </mat-card-actions>
 </mat-card>
+
+<mat-card *ngIf="item" class="history">
+  <mat-card-subtitle>Stock history</mat-card-subtitle>
+
+  <table mat-table [dataSource]="movements" class="full-width" *ngIf="movements.length; else noHistory">
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef>When</th>
+      <td mat-cell *matCellDef="let m">{{ m.createdAt | date:'MMM d, y HH:mm' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="delta">
+      <th mat-header-cell *matHeaderCellDef class="num">Change</th>
+      <td mat-cell *matCellDef="let m" class="num" [class.pos]="m.delta > 0" [class.neg]="m.delta < 0">
+        {{ m.delta > 0 ? '+' : '' }}{{ m.delta | number }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="quantityAfter">
+      <th mat-header-cell *matHeaderCellDef class="num">After</th>
+      <td mat-cell *matCellDef="let m" class="num">{{ m.quantityAfter | number }}</td>
+    </ng-container>
+    <ng-container matColumnDef="reason">
+      <th mat-header-cell *matHeaderCellDef>Reason</th>
+      <td mat-cell *matCellDef="let m">{{ m.reason || '-' }}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="movementColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: movementColumns;"></tr>
+  </table>
+
+  <ng-template #noHistory><p class="muted">No stock changes yet.</p></ng-template>
+</mat-card>
