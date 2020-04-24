@@ -25,7 +25,7 @@ namespace WarehousePulse.Api.Controllers
         }
 
         [HttpGet, Route("")]
-        public async Task<IHttpActionResult> GetAll(string status = null)
+        public async Task<IHttpActionResult> GetAll(string status = null, string carrier = null, string search = null)
         {
             var query = db.Shipments.AsQueryable();
 
@@ -33,12 +33,34 @@ namespace WarehousePulse.Api.Controllers
             if (!string.IsNullOrEmpty(status) && Enum.TryParse(status, true, out parsed))
                 query = query.Where(s => s.Status == parsed);
 
+            if (!string.IsNullOrWhiteSpace(carrier))
+                query = query.Where(s => s.Carrier == carrier);
+
+            // reference or tracking number, people paste either one
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim();
+                query = query.Where(s => s.Reference.Contains(term) || s.TrackingNumber.Contains(term));
+            }
+
             var shipments = await query
                 .OrderByDescending(s => s.CreatedAt)
                 .Take(200)
                 .ToListAsync();
 
             return Ok(shipments.Select(s => ShipmentDto.From(s, includeLines: false)));
+        }
+
+        [HttpGet, Route("carriers")]
+        public async Task<IHttpActionResult> Carriers()
+        {
+            var carriers = await db.Shipments
+                .Where(s => s.Carrier != null && s.Carrier != "")
+                .Select(s => s.Carrier)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+            return Ok(carriers);
         }
 
         [HttpGet, Route("{id:int}", Name = "GetShipment")]
