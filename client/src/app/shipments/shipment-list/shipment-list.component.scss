@@ -1,5 +1,10 @@
-.status-filter {
-  margin-bottom: 16px;
+.filters {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  .search { width: 240px; }
 }
 
 .tracking {

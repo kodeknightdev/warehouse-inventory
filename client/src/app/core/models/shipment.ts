@@ -51,3 +51,9 @@ export interface CreateShipmentRequest {
   expectedAt?: string;
   lines: { inventoryItemId: number; quantity: number }[];
 }
+
+export interface ShipmentFilter {
+  status?: ShipmentStatus;
+  carrier?: string;
+  search?: string;
+}

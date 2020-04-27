@@ -4,10 +4,25 @@
   </button>
 </app-page-header>
 
-<mat-button-toggle-group [(ngModel)]="status" (change)="load()" class="status-filter">
-  <mat-button-toggle value="">All</mat-button-toggle>
-  <mat-button-toggle *ngFor="let s of statuses" [value]="s">{{ s === 'InTransit' ? 'In transit' : s }}</mat-button-toggle>
-</mat-button-toggle-group>
+<div class="filters">
+  <mat-button-toggle-group [(ngModel)]="status" (change)="load()">
+    <mat-button-toggle value="">All</mat-button-toggle>
+    <mat-button-toggle *ngFor="let s of statuses" [value]="s">{{ s === 'InTransit' ? 'In transit' : s }}</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Carrier</mat-label>
+    <mat-select [(ngModel)]="carrier" (selectionChange)="load()">
+      <mat-option value="">Any</mat-option>
+      <mat-option *ngFor="let c of carriers" [value]="c">{{ c }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="search">
+    <mat-label>Reference or tracking #</mat-label>
+    <input matInput [formControl]="search" autocomplete="off">
+  </mat-form-field>
+</div>
 
 <table mat-table [dataSource]="shipments" class="mat-elevation-z1 full-width">
   <ng-container matColumnDef="reference">

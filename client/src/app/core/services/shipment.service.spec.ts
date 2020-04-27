@@ -26,7 +26,7 @@ describe('ShipmentService', () => {
   });
 
   it('filters by status', () => {
-    service.getShipments('InTransit').subscribe();
+    service.getShipments({ status: 'InTransit' }).subscribe();
 
     const req = http.expectOne(r => r.url === '/api/shipments');
     expect(req.request.params.get('status')).toBe('InTransit');
