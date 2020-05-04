@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -11,6 +12,7 @@ import { InventoryService } from '../../core/services/inventory.service';
 })
 export class AdjustStockDialogComponent {
   saving = false;
+  conflict = false;
 
   form = this.fb.group({
     direction: ['in'],
@@ -40,9 +42,17 @@ export class AdjustStockDialogComponent {
     const delta = v.direction === 'in' ? v.quantity : -v.quantity;
 
     this.saving = true;
+    this.conflict = false;
     this.inventory.adjustStock(this.item.id, delta, v.reason).subscribe(
       updated => this.dialogRef.close(updated),
-      () => this.saving = false
+      (err: HttpErrorResponse) => {
+        this.saving = false;
+        if (err.status === 409) {
+          // someone else moved stock in the meantime - show the fresh number and let them retry
+          this.conflict = true;
+          this.inventory.getItem(this.item.id).subscribe(fresh => this.item = fresh);
+        }
+      }
     );
   }
 }

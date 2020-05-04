@@ -2,6 +2,11 @@
 
 <form [formGroup]="form" (ngSubmit)="save()">
   <mat-dialog-content>
+    <p class="conflict" *ngIf="conflict">
+      <mat-icon inline>info</mat-icon>
+      Stock changed while you were editing. On hand is now {{ item.quantityOnHand }}, check and apply again.
+    </p>
+
     <mat-radio-group formControlName="direction" class="direction">
       <mat-radio-button value="in">Receive (+)</mat-radio-button>
       <mat-radio-button value="out">Pick / write off (-)</mat-radio-button>
