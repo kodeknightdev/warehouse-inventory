@@ -43,7 +43,9 @@ namespace WarehousePulse.Api.Controllers
                 query = query.Where(s => s.Reference.Contains(term) || s.TrackingNumber.Contains(term));
             }
 
+            // need the lines for TotalUnits, without this the list always showed 0
             var shipments = await query
+                .Include(s => s.Lines)
                 .OrderByDescending(s => s.CreatedAt)
                 .Take(200)
                 .ToListAsync();
