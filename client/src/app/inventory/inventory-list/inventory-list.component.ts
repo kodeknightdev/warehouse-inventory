@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, finalize, takeUntil } from 'rxjs/operators';
 
 import { InventoryItem, ItemQuery } from '../../core/models/inventory-item';
 import { InventoryService } from '../../core/services/inventory.service';
@@ -19,6 +19,7 @@ export class InventoryListComponent implements OnInit, OnDestroy {
   items: InventoryItem[] = [];
   total = 0;
   categories: string[] = [];
+  loading = false;
 
   search = new FormControl('');
   category = new FormControl('');
@@ -69,9 +70,12 @@ export class InventoryListComponent implements OnInit, OnDestroy {
   }
 
   load() {
-    this.inventory.getItems(this.query).subscribe(result => {
-      this.items = result.items;
-      this.total = result.total;
-    });
+    this.loading = true;
+    this.inventory.getItems(this.query)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(result => {
+        this.items = result.items;
+        this.total = result.total;
+      });
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, finalize, takeUntil } from 'rxjs/operators';
 
 import { Shipment, ShipmentStatus } from '../../core/models/shipment';
 import { ShipmentService } from '../../core/services/shipment.service';
@@ -17,6 +17,7 @@ export class ShipmentListComponent implements OnInit, OnDestroy {
   status: ShipmentStatus | '' = '';
   carrier = '';
   carriers: string[] = [];
+  loading = false;
   search = new FormControl('');
 
   private destroy$ = new Subject<void>();
@@ -39,10 +40,13 @@ export class ShipmentListComponent implements OnInit, OnDestroy {
   }
 
   load() {
+    this.loading = true;
     this.shipmentService.getShipments({
       status: this.status || undefined,
       carrier: this.carrier,
       search: this.search.value
-    }).subscribe(list => this.shipments = list);
+    })
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(list => this.shipments = list);
   }
 }

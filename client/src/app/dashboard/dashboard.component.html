@@ -1,6 +1,6 @@
 <h2>Dashboard</h2>
 
-<ng-container *ngIf="summary$ | async as s">
+<ng-container *ngIf="summary$ | async as s; else loadingTpl">
   <div class="tiles">
     <mat-card class="tile">
       <div class="label">SKUs</div>
@@ -40,3 +40,7 @@
     <app-category-chart [data]="s.stockByCategory"></app-category-chart>
   </mat-card>
 </ng-container>
+
+<ng-template #loadingTpl>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

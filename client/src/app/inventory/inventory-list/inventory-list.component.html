@@ -20,6 +20,7 @@
   </mat-form-field>
 </div>
 
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <table mat-table [dataSource]="items" class="mat-elevation-z1 full-width">
   <ng-container matColumnDef="sku">
     <th mat-header-cell *matHeaderCellDef>SKU</th>

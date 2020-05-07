@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -31,6 +32,7 @@ const modules = [
   MatListModule,
   MatNativeDateModule,
   MatPaginatorModule,
+  MatProgressBarModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
