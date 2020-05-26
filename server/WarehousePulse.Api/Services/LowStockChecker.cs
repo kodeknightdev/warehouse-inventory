@@ -5,6 +5,12 @@ using WarehousePulse.Api.Models;
 
 namespace WarehousePulse.Api.Services
 {
+    public class LowStockCheckResult
+    {
+        public int Raised { get; set; }
+        public int Resolved { get; set; }
+    }
+
     public class LowStockChecker
     {
         private readonly WarehouseContext db;
@@ -14,8 +20,7 @@ namespace WarehousePulse.Api.Services
             this.db = db;
         }
 
-        /// <returns>number of new alerts raised</returns>
-        public int Run(DateTime now)
+        public LowStockCheckResult Run(DateTime now)
         {
             // items that already have an open alert are skipped, otherwise we'd add
             // a new alert every 5 minutes for the same item
@@ -35,9 +40,20 @@ namespace WarehousePulse.Api.Services
                 });
             }
 
-            if (low.Count > 0)
+            // close alerts once stock is back above the reorder level (or alerts were switched off
+            // for the item). Without this an item could never alert again after the first time.
+            var recovered = db.LowStockAlerts
+                .Where(a => a.ResolvedAt == null)
+                .Where(a => a.InventoryItem.ReorderLevel == 0 || a.InventoryItem.QuantityOnHand > a.InventoryItem.ReorderLevel)
+                .ToList();
+
+            foreach (var alert in recovered)
+                alert.ResolvedAt = now;
+
+            if (low.Count > 0 || recovered.Count > 0)
                 db.SaveChanges();
-            return low.Count;
+
+            return new LowStockCheckResult { Raised = low.Count, Resolved = recovered.Count };
         }
     }
 }

@@ -79,9 +79,9 @@ namespace WarehousePulse.Api.Background
         {
             using (var db = new WarehouseContext())
             {
-                var raised = new LowStockChecker(db).Run(DateTime.UtcNow);
-                if (raised > 0)
-                    Trace.TraceWarning("Low stock check raised {0} alert(s)", raised);
+                var result = new LowStockChecker(db).Run(DateTime.UtcNow);
+                if (result.Raised > 0 || result.Resolved > 0)
+                    Trace.TraceInformation("Low stock check: {0} raised, {1} resolved", result.Raised, result.Resolved);
             }
         }
 
