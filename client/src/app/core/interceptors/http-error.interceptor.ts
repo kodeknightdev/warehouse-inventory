@@ -4,14 +4,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+// requests made in the background (polling) set this so a dead API doesn't pop a snackbar every minute
+export const SILENT_ERRORS_HEADER = 'X-Silent-Errors';
+
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(private snackBar: MatSnackBar) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const silent = req.headers.has(SILENT_ERRORS_HEADER);
+    if (silent) {
+      req = req.clone({ headers: req.headers.delete(SILENT_ERRORS_HEADER) });
+    }
+
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
+        if (silent) {
+          return throwError(err);
+        }
         this.snackBar.open(this.describe(err), 'Dismiss', { duration: 6000, panelClass: 'snack-error' });
         return throwError(err);
       })
