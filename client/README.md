@@ -1,27 +1,44 @@
-# WarehousePulse
+# Warehouse Pulse - client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.1.
+Angular 9 front end for the Warehouse Pulse API.
 
-## Development server
+## Running locally
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Needs Node 12 LTS and the API running in IIS Express (`https://localhost:44358`, see `server/`).
 
-## Code scaffolding
+```
+npm install
+npm start
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Open http://localhost:4200. Calls to `/api` are proxied to the API by `proxy.conf.json`,
+so no CORS setup is needed in dev.
+
+## Pages
+
+- **Dashboard** - totals, shipments by state, stock value per category
+- **Inventory** - search / filter / page items, create + edit, item page with stock adjustments and history
+- **Shipments** - list with status/carrier filters, new shipment form, detail page with tracking timeline
+  and status updates
+
+Low stock alerts are polled every minute and shown as a banner + the bell badge in the toolbar.
+
+## Tests
+
+```
+npm test
+```
+
+Headless (no Chrome window, e.g. on a build agent):
+
+```
+npx ng test --watch=false --browsers=ChromeHeadlessCI
+```
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```
+npm run build -- --prod
+```
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Output goes to `dist/warehouse-pulse`. In production the app expects the API on the same host under `/api`.
