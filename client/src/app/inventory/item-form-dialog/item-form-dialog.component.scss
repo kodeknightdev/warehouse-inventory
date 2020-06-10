@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 16px;
-  min-width: 520px;
+  min-width: 0;
 
   .wide {
     grid-column: span 2;

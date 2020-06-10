@@ -6,6 +6,10 @@
   align-items: start;
 }
 
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
 .facts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

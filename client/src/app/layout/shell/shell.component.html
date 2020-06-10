@@ -1,5 +1,7 @@
 <mat-sidenav-container class="shell">
-  <mat-sidenav mode="side" opened class="shell-nav">
+  <mat-sidenav #nav class="shell-nav"
+    [mode]="(isSmall$ | async) ? 'over' : 'side'"
+    [opened]="!(isSmall$ | async)">
     <div class="brand">Warehouse Pulse</div>
     <mat-nav-list>
       <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
@@ -16,6 +18,9 @@
 
   <mat-sidenav-content>
     <mat-toolbar color="primary">
+      <button mat-icon-button *ngIf="isSmall$ | async" (click)="nav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
       <span>{{ title }}</span>
       <span class="toolbar-spacer"></span>
       <button mat-icon-button routerLink="/dashboard" title="Low stock alerts">

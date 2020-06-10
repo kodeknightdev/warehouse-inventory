@@ -28,6 +28,12 @@
   padding: 24px;
 }
 
+@media (max-width: 900px) {
+  .content {
+    padding: 12px;
+  }
+}
+
 .toolbar-spacer {
   flex: 1;
 }
