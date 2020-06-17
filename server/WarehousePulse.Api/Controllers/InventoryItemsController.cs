@@ -42,8 +42,7 @@ namespace WarehousePulse.Api.Controllers
         [HttpGet, Route("categories")]
         public async Task<IHttpActionResult> Categories()
         {
-            var items = await repo.GetAllAsync();
-            return Ok(items.Select(i => i.Category).Where(c => c != null).Distinct().OrderBy(c => c));
+            return Ok(await repo.GetCategoriesAsync());
         }
 
         [HttpGet, Route("{id:int}", Name = "GetItem")]

@@ -16,11 +16,13 @@ namespace WarehousePulse.Api.Data
             this.db = db;
         }
 
-        public Task<List<InventoryItem>> GetAllAsync()
+        public Task<List<string>> GetCategoriesAsync()
         {
             return db.InventoryItems
-                .Include(i => i.Location)
-                .OrderBy(i => i.Sku)
+                .Where(i => i.Category != null)
+                .Select(i => i.Category)
+                .Distinct()
+                .OrderBy(c => c)
                 .ToListAsync();
         }
 
