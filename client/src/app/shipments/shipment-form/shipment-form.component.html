@@ -55,6 +55,7 @@
           <mat-label>Qty</mat-label>
           <input matInput type="number" formControlName="quantity">
           <mat-hint *ngIf="line.value.inventoryItemId">{{ available(line.value.inventoryItemId) }} on hand</mat-hint>
+          <mat-error>At least 1</mat-error>
         </mat-form-field>
 
         <button mat-icon-button type="button" (click)="removeLine(i)" [disabled]="lines.length === 1">

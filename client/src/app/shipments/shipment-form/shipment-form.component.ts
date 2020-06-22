@@ -52,7 +52,7 @@ export class ShipmentFormComponent implements OnInit {
   addLine() {
     this.lines.push(this.fb.group({
       inventoryItemId: [null, Validators.required],
-      quantity: [1, [Validators.required, Validators.min(0)]]
+      quantity: [1, [Validators.required, Validators.min(1)]]
     }));
   }
 
