@@ -25,8 +25,10 @@ namespace WarehousePulse.Api.Models.Dto
 
     public class CreateShipmentLine
     {
+        [Range(1, int.MaxValue, ErrorMessage = "Item is required")]
         public int InventoryItemId { get; set; }
 
+        [Range(1, 1000000, ErrorMessage = "Quantity must be at least 1")]
         public int Quantity { get; set; }
     }
 }
