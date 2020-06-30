@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, timer } from 'rxjs';
+import { merge, Observable, of, Subject, timer } from 'rxjs';
 import { catchError, shareReplay, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -17,7 +17,9 @@ export class AlertService {
 
   // shared between the banner and the toolbar badge so we only poll once.
   // refCount so the timer actually stops when nobody is subscribed - plain shareReplay(1) kept it running forever
-  readonly openAlerts$: Observable<LowStockAlert[]> = timer(0, POLL_MS).pipe(
+  private refresh$ = new Subject<void>();
+
+  readonly openAlerts$: Observable<LowStockAlert[]> = merge(timer(0, POLL_MS), this.refresh$).pipe(
     switchMap(() => this.getOpenAlerts(true).pipe(catchError(() => of([])))),
     shareReplay({ bufferSize: 1, refCount: true })
   );
@@ -27,6 +29,11 @@ export class AlertService {
   getOpenAlerts(silent = false): Observable<LowStockAlert[]> {
     const headers = silent ? new HttpHeaders({ [SILENT_ERRORS_HEADER]: '1' }) : undefined;
     return this.http.get<LowStockAlert[]>(this.baseUrl, { headers });
+  }
+
+  /** re-poll now instead of waiting for the next tick */
+  refresh() {
+    this.refresh$.next();
   }
 
   acknowledge(id: number): Observable<void> {

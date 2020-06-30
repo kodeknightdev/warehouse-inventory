@@ -35,6 +35,8 @@ export class LowStockBannerComponent implements OnInit, OnDestroy {
   acknowledge(alert: LowStockAlert) {
     this.alertService.acknowledge(alert.id).subscribe(() => {
       alert.acknowledgedAt = new Date().toISOString();
+      // otherwise the toolbar badge keeps the old count for up to a minute
+      this.alertService.refresh();
     });
   }
 
